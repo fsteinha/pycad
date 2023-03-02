@@ -1,4 +1,5 @@
 from pcad_pos import pos, rot
+import dimensioning as dim
 import traceback
 
 class obj:
@@ -36,15 +37,15 @@ class cobj(obj):
         super().__init__(name, pos, rot)
         self.l_obj = []
         for arg in args:
-            if self.add(arg) == False:
-                raise Exception(f"Unallowed type {type(arg)}")
+            self.add(arg)
         pass
 
     def add(self, a_obj) -> bool:
-        if isinstance(a_obj, obj):
+        if isinstance(a_obj, obj) or \
+            isinstance(a_obj, dim.Dimensioning):
             self.l_obj.append(a_obj)
         else:
-            return False
+            raise Exception(f"Unallowed type {type(a_obj)}")
         return True
 
     def get(self) -> list:
