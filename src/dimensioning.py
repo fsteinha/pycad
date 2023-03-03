@@ -56,54 +56,64 @@ class Dimensioning:
         match self.plane:
             case "xy":
                 self.draw_xy()
+                pass
             case "-xy":
                 self.draw_nxy()
+                pass
             case "yx":
                 self.draw_yx()
+                pass
             case "-yx":
                 self.draw_nyx()
+                pass
             case "xz":
                 self.draw_xz()
+                pass
             case "-xz":
                 self.draw_nxz()
+                pass
             case "zx":
                 self.draw_zx()
+                pass
             case "-zx":
                 self.draw_nzx()
+                pass
             case "yz":
                 self.draw_yz()
+                pass
             case "-yz":
                 self.draw_nyz()
+                pass
             case "zy":
                 self.draw_zy()
+                pass
             case "-zy":
                 self.draw_nzy()
+                pass
             case other:
                 raise ValueError("Invalid plane type. Must be 'x', 'y', or 'z'.")
         pass
 
-    def draw_xy(self):
-        aux_start_ep_y = self.start_point.y + self.AUX_LINE_LENGHT
-        aux_end_ep_y = self.end_point.y + self.AUX_LINE_LENGHT
+    def draw_yx(self):
+        as_ep_y = self.start_point.y + self.AUX_LINE_LENGHT
+        ae_ep_y = self.end_point.y + self.AUX_LINE_LENGHT
 
         self.aux_line_start = Line(self.start_point,
                                    Point(self.start_point.x,
-                                         aux_start_ep_y,
+                                         as_ep_y,
                                          self.start_point.z))
         self.aux_line_end   = Line(self.end_point,
                                    Point(self.end_point.x,
-                                         aux_end_ep_y,
+                                         ae_ep_y,
                                          self.end_point.z))
 
         self.line           = Line(Point(self.start_point.x,
-                                         aux_start_ep_y-self.LINE_OFFSET,
+                                         as_ep_y-self.LINE_OFFSET,
                                          self.start_point.z),
                                     Point(self.end_point.x,
-                                           aux_end_ep_y-self.LINE_OFFSET,
+                                           ae_ep_y-self.LINE_OFFSET,
                                            self.end_point.z))
-        pass
-
-    def draw_nxy(self):
+    def draw_nyx(self):
         aux_start_ep_y = self.start_point.y - self.AUX_LINE_LENGHT
         aux_end_ep_y = self.end_point.y - self.AUX_LINE_LENGHT
 
@@ -122,7 +132,7 @@ class Dimensioning:
                                     Point(self.end_point.x,
                                           aux_end_ep_y+self.LINE_OFFSET,
                                           self.end_point.z))
-    def draw_yx(self):
+    def draw_xy(self):
         aux_start_ep_x = self.start_point.x + self.AUX_LINE_LENGHT
         aux_end_ep_x = self.end_point.x + self.AUX_LINE_LENGHT
 
@@ -132,7 +142,7 @@ class Dimensioning:
                                           self.start_point.z))
         self.aux_line_end   = Line(self.end_point,
                                    Point(aux_end_ep_x,
-                                         self.end_point.x,
+                                         self.end_point.y,
                                          self.end_point.z))
 
         self.line           = Line(Point(aux_start_ep_x-self.LINE_OFFSET,
@@ -141,7 +151,7 @@ class Dimensioning:
                                     Point(aux_end_ep_x-self.LINE_OFFSET,
                                           self.end_point.y,
                                           self.end_point.z))
-    def draw_nyx(self):
+    def draw_nxy(self):
         aux_start_ep_x = self.start_point.x - self.AUX_LINE_LENGHT
         aux_end_ep_x = self.end_point.x - self.AUX_LINE_LENGHT
 
@@ -160,19 +170,159 @@ class Dimensioning:
                                     Point(aux_end_ep_x+self.LINE_OFFSET,
                                           self.end_point.y,
                                           self.end_point.z))
+    def draw_xz(self):
+        as_ep_x = self.start_point.x + self.AUX_LINE_LENGHT
+        ae_ep_x = self.end_point.x + self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                    Point(as_ep_x,
+                                          self.start_point.y,
+                                          self.start_point.z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(ae_ep_x,
+                                         self.end_point.y,
+                                         self.end_point.z))
+
+        self.line           = Line(Point(as_ep_x-self.LINE_OFFSET,
+                                         self.start_point.y,
+                                         self.start_point.z),
+                                    Point(ae_ep_x-self.LINE_OFFSET,
+                                          self.end_point.y,
+                                          self.end_point.z))
+        pass
+
+    def draw_nxz(self):
+        as_ep_x = self.start_point.x - self.AUX_LINE_LENGHT
+        ae_ep_x = self.end_point.x - self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                    Point(as_ep_x,
+                                          self.start_point.y,
+                                          self.start_point.z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(ae_ep_x,
+                                         self.end_point.y,
+                                         self.end_point.z))
+
+        self.line           = Line(Point(as_ep_x+self.LINE_OFFSET,
+                                         self.start_point.y,
+                                         self.start_point.z),
+                                    Point(ae_ep_x+self.LINE_OFFSET,
+                                          self.end_point.y,
+                                          self.end_point.z))
     def draw_zx(self):
+        as_ep_z = self.start_point.z + self.AUX_LINE_LENGHT
+        ae_ep_z = self.end_point.z + self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                   Point(self.start_point.x,
+                                         self.start_point.y,
+                                         as_ep_z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(self.end_point.x,
+                                         self.end_point.y,
+                                         ae_ep_z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         self.start_point.y,
+                                         as_ep_z-self.LINE_OFFSET),
+                                    Point(self.end_point.x,
+                                           self.end_point.y,
+                                           ae_ep_z-self.LINE_OFFSET))
         pass
     def draw_nzx(self):
-        pass
-    def draw_xz(self):
-        pass
-    def draw_nxz(self):
+        as_ep_z = self.start_point.y - self.AUX_LINE_LENGHT
+        ae_ep_z = self.end_point.y - self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                    Point(self.start_point.x,
+                                          self.start_point.y,
+                                          as_ep_z))
+        self.aux_line_end   = Line(self.end_point,
+                                    Point(self.end_point.x,
+                                          self.end_point.y,
+                                          ae_ep_z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         self.start_point.y,
+                                         as_ep_z+self.LINE_OFFSET),
+                                    Point(self.end_point.x,
+                                          self.end_point.y,
+                                          ae_ep_z+self.LINE_OFFSET))
         pass
     def draw_zy(self):
-        pass
+        as_ep_z = self.start_point.z + self.AUX_LINE_LENGHT
+        ae_ep_z = self.end_point.z + self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                    Point(self.start_point.x,
+                                          self.start_point.y,
+                                          as_ep_z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(self.end_point.x,
+                                         self.end_point.y,
+                                         ae_ep_z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         self.start_point.y,
+                                         as_ep_z-self.LINE_OFFSET),
+                                    Point(self.end_point.x,
+                                          self.end_point.y,
+                                          ae_ep_z-self.LINE_OFFSET))
     def draw_nzy(self):
-        pass
+        as_ep_z = self.start_point.z - self.AUX_LINE_LENGHT
+        ae_ep_z = self.end_point.z - self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                    Point(self.start_point.x,
+                                          self.start_point.y,
+                                          as_ep_z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(self.end_point.x,
+                                         self.end_point.y,
+                                         ae_ep_z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         self.start_point.y,
+                                         as_ep_z+self.LINE_OFFSET),
+                                    Point(self.end_point.x,
+                                          self.end_point.y,
+                                          ae_ep_z+self.LINE_OFFSET))
     def draw_yz(self):
-        pass
+        as_ep_y = self.start_point.y + self.AUX_LINE_LENGHT
+        ae_ep_y = self.end_point.y + self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                   Point(self.start_point.x,
+                                         as_ep_y,
+                                         self.start_point.z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(self.end_point.x,
+                                         ae_ep_y,
+                                         self.end_point.z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         as_ep_y-self.LINE_OFFSET,
+                                         self.start_point.z),
+                                    Point(self.end_point.x,
+                                           ae_ep_y-self.LINE_OFFSET,
+                                           self.end_point.z))
     def draw_nyz(self):
-        pass
+        as_ep_y = self.start_point.y - self.AUX_LINE_LENGHT
+        ae_ep_y = self.end_point.y - self.AUX_LINE_LENGHT
+
+        self.aux_line_start = Line(self.start_point,
+                                   Point(self.start_point.x,
+                                         as_ep_y,
+                                         self.start_point.z))
+        self.aux_line_end   = Line(self.end_point,
+                                   Point(self.end_point.x,
+                                         ae_ep_y,
+                                         self.end_point.z))
+
+        self.line           = Line(Point(self.start_point.x,
+                                         as_ep_y+self.LINE_OFFSET,
+                                         self.start_point.z),
+                                    Point(self.end_point.x,
+                                           ae_ep_y+self.LINE_OFFSET,
+                                           self.end_point.z))
