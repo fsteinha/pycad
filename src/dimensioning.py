@@ -14,6 +14,13 @@ class Point:
         y = self.y + other.y
         z = self.z + other.z
         return Point(x, y, z)
+
+
+    def __sub__(self, other):
+        x = self.x - other.x
+        y = self.y - other.y
+        z = self.z - other.z
+        return Point(x, y, z)
 class Line:
     def __init__(self, start_point, end_point):
         self.start_point = start_point
@@ -32,8 +39,9 @@ class Dimensioning:
     AUX_LINE_LENGHT = 10
     LINE_OFFSET = 2
     TEXT_OFFSET = 2
+    TEXT_SIZE = 1
 
-    def __init__(self, start_point:Point, end_point:Point, length=None, plane="xy", name = None) -> None:
+    def __init__(self, start_point:Point, end_point:Point, length=None, plane="xy", name = None, text = None) -> None:
         self.start_point = start_point
         self.end_point = end_point
         self.length = length
@@ -43,6 +51,7 @@ class Dimensioning:
         self.line:Line = None
         self.name = name
         self.textpoint = None
+        self.text = text
         self.draw()
 
     def calculate_length(self):
@@ -62,7 +71,9 @@ class Dimensioning:
 
     def draw(self):
         if self.length is None:
-            self.calculate_length()
+            self.length = self.calculate_length()
+        if self.text == None:
+            self.text = str(self.length)
 
         match self.plane:
             case "xy":
@@ -273,8 +284,8 @@ class Dimensioning:
         pass
 
     def draw_nzx(self):
-        as_ep_z = self.start_point.y - self.AUX_LINE_LENGHT
-        ae_ep_z = self.end_point.y - self.AUX_LINE_LENGHT
+        as_ep_z = self.start_point.z - self.AUX_LINE_LENGHT
+        ae_ep_z = self.end_point.z - self.AUX_LINE_LENGHT
 
         self.aux_line_start = Line(self.start_point,
                                     Point(self.start_point.x,
@@ -293,7 +304,7 @@ class Dimensioning:
                                           self.end_point.y,
                                           ae_ep_z+self.LINE_OFFSET))
 
-        self.textpoint = self.line.midpoint() - Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
         pass
 
     def draw_zy(self):
@@ -340,7 +351,7 @@ class Dimensioning:
                                           self.end_point.y,
                                           ae_ep_z+self.LINE_OFFSET))
 
-        self.textpoint = self.line.midpoint() - Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
         pass
 
     def draw_yz(self):
@@ -387,5 +398,5 @@ class Dimensioning:
                                            ae_ep_y+self.LINE_OFFSET,
                                            self.end_point.z))
 
-        self.textpoint = self.line.midpoint() - Point(0,self.TEXT_OFFSET,0)
+        self.textpoint = self.line.midpoint() + Point(0,self.TEXT_OFFSET,0)
         pass
