@@ -22,10 +22,12 @@ class const:
         for i_obj in l_obj:
             if isinstance(i_obj, cube):
                 self.cube(i_obj)
-            elif isinstance(i_obj, cobj):
-                self.cobj(i_obj)
+            elif isinstance(i_obj, aobj):
+                self.aobj(i_obj)
             elif isinstance(i_obj, dim.Dimensioning):
                 self.dim(i_obj)
+            elif isinstance(i_obj, sobj):
+                self.sobj(i_obj)
             else:
                 raise Exception (f"Unknown {type(i_obj)}")
 
@@ -35,9 +37,11 @@ class const:
     def cube(self):
         raise Exception ("Function is virtual")
 
-    def cobj(self):
+    def aobj(self):
         raise Exception ("Function is virtual")
 
     def dim(self):
         raise Exception ("Function is virtual")
 
+    def sobj(self):
+        raise Exception ("Function is virtual")

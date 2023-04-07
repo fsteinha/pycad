@@ -7,7 +7,7 @@ import dimensioning as dim
 import const_cadquery
 import exam_parse
 
-cube = pcad.cobj("cube_")
+cube = pcad.aobj("cube_")
 cube.add(pcad.cube(10, 10, 10))
 cube.add(dim.Dimensioning(dim.Point(0,10,0),dim.Point(10,10,0),plane="yx"))
 cube.add(dim.Dimensioning(dim.Point(0,10,10),dim.Point(10,10,10),plane="yx"))

@@ -33,7 +33,7 @@ class scad_const(const):
         self.s_out = self.s_out + "};\n"
         self.s_out = self.s_out + "translate([{4},{5},{6}]) rotate([{7},{8},{9}]) {0}();\n".format(*args)
 
-    def cobj(self, a_obj:cobj):
+    def aobj(self, a_obj:cobj):
         args = ("m_" + a_obj.get_name(),
                 a_obj.pos.x,a_obj.pos.y,a_obj.pos.z,
                 a_obj.pos.x,a_obj.pos.y,a_obj.pos.z,
@@ -43,6 +43,16 @@ class scad_const(const):
         self.iterate_obj(a_obj.get())
         self.s_out = self.s_out + "};\n"
         self.s_out = self.s_out + "translate([{4},{5},{6}]) rotate([{7},{8},{9}]) {0}();\n".format(*args)
+
+    def sobj(self, a_obj:sobj):
+        s_module = "m_" + a_obj.get_name()
+        self.s_out = self.s_out + f"module {s_module}()"
+        self.s_out = self.s_out + "{\n"
+        self.s_out = self.s_out + "  difference(){\n"
+        self.iterate_obj(a_obj.get())
+        self.s_out = self.s_out + "  };\n"
+        self.s_out = self.s_out + "};\n"
+        self.s_out = self.s_out + f"translate([{a_obj.pos.x},{a_obj.pos.y},{a_obj.pos.z}]) rotate([{a_obj.rot.ax},{a_obj.rot.ay},{a_obj.rot.az}]) {s_module}();\n"
 
     def dim(self, a_dim:dim.Dimensioning):
         args = ("m_dim_" + a_dim.get_name(),

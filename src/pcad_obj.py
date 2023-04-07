@@ -51,6 +51,10 @@ class cobj(obj):
     def get(self) -> list:
         return self.l_obj
 
+class aobj(cobj):
+    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), *args) -> None:
+        super().__init__(name, pos, rot, *args)
+        pass
 class sobj(cobj):
     def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), *args) -> None:
         super().__init__(name, pos, rot, *args)

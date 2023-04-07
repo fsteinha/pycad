@@ -43,7 +43,7 @@ class cq_const(const):
             self.s_out += "       rotate((0,0,0),(0,0,1),{9}).".format(*args)
         self.s_out += "           translate(({4},{5},{6})))\n".format(*args)
 
-    def cobj(self, a_obj:cobj):
+    def aobj(self, a_obj:cobj):
         self.iterate_obj(a_obj.get())
 
     def dim(self, a_dim:dim.Dimensioning):
