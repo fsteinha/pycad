@@ -2,8 +2,10 @@ import sys
 sys.path.append("../src")
 
 import pcad as pcad
-import const_scad as const
+import const_scad
+import const_cadquery
 import dimensioning as dim
+import exam_parse
 
 
 thickness = 6;
@@ -31,12 +33,17 @@ drawer.add(pcad.cube(drawer_x - 2*thickness, drawer_y - 2*thickness, thickness,
 drawer.add(pcad.cube(front_x, thickness, front_z,
                        "frontplate", pcad.pos(-1*((front_x-drawer_x)/2), drawer_y, front_z_offset)))
 
-dim.Dimensioning.TEXT_SIZE = 10
-drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(0,0,0),plane="-xy"))
-drawer.add(dim.Dimensioning(dim.Point(0,drawer_y,0),dim.Point(0,0,0),plane="-xy"))
+#dim.Dimensioning.TEXT_SIZE = 10
+# drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(0,0,0),plane="-xy"))
+# drawer.add(dim.Dimensioning(dim.Point(0,drawer_y,0),dim.Point(0,0,0),plane="-xy"))
 
-drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(-1*((front_x-drawer_x)/2) + front_x,drawer_y + thickness,0),plane="yx"))
+# drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(-1*((front_x-drawer_x)/2) + front_x,drawer_y + thickness,0),plane="yx"))
+
+if exam_parse.M_SCAD==True:
+    scad = const_scad.scad_const(exam_parse.get_const_name(__file__), drawer)
+    scad.show()
+else:
+    constcq = const_cadquery.cq_const(exam_parse.get_const_name(__file__), drawer)
+    constcq.show()
 
 
-scad = const.scad("test", drawer)
-scad.show()

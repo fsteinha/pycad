@@ -3,11 +3,11 @@ from pcad_obj import *
 from pcad_primitives import *
 import subprocess
 
-class scad(const):
+class scad_const(const):
     def __init__(self, name, *l_obj) -> None:
         super().__init__(name, *l_obj)
         self.s_out = ""
-        self.s_filename = name + ".scad"
+        self.s_filename += ".scad"
         self.s_ecall = "openscad"
 
     def show(self):
@@ -15,22 +15,12 @@ class scad(const):
         f_file = open(self.s_filename, "w")
         f_file.write(self.s_out)
         f_file.close()
+        print(f"{self.s_filename} created")
         s_call = f"{self.s_ecall} {self.s_filename}"
         print (s_call)
         p = subprocess.Popen([self.s_ecall, self.s_filename], stdout = subprocess.PIPE)
+        print ("scad started")
         #p.wait()
-
-    def iterate_obj(self, l_obj):
-        for i_obj in l_obj:
-            if isinstance(i_obj, cube):
-                self.cube(i_obj)
-            elif isinstance(i_obj, cobj):
-                self.cobj(i_obj)
-            elif isinstance(i_obj, dim.Dimensioning):
-                self.dim(i_obj)
-            else:
-                raise Exception (f"Unknown {type(i_obj)}")
-
 
     def cube(self, a_cube:cube):
         args = ("m_" + a_cube.get_name(),

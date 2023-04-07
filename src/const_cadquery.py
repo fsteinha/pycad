@@ -47,81 +47,73 @@ class cq_const(const):
         self.iterate_obj(a_obj.get())
 
     def dim(self, a_dim:dim.Dimensioning):
-        args = ("m_dim_" + a_dim.get_name(),
-                a_dim.aux_line_start.start_point.x,
-                a_dim.aux_line_start.start_point.y,
-                a_dim.aux_line_start.start_point.z,
+        args = (a_dim.get_name(),
+                a_dim.aux_line_start.start_point.x, # 1
+                a_dim.aux_line_start.start_point.y, # 2
+                a_dim.aux_line_start.start_point.z, # 3
 
-                a_dim.aux_line_start.end_point.x,
-                a_dim.aux_line_start.end_point.y,
-                a_dim.aux_line_start.end_point.z,
+                a_dim.aux_line_start.end_point.x,   # 4
+                a_dim.aux_line_start.end_point.y,   # 5
+                a_dim.aux_line_start.end_point.z,   # 6
 
-                a_dim.aux_line_end.start_point.x,
-                a_dim.aux_line_end.start_point.y,
-                a_dim.aux_line_end.start_point.z,
+                a_dim.aux_line_end.start_point.x,   # 7
+                a_dim.aux_line_end.start_point.y,   # 8
+                a_dim.aux_line_end.start_point.z,   # 9
 
-                a_dim.aux_line_end.end_point.x,
-                a_dim.aux_line_end.end_point.y,
-                a_dim.aux_line_end.end_point.z,
+                a_dim.aux_line_end.end_point.x,     # 10
+                a_dim.aux_line_end.end_point.y,     # 11
+                a_dim.aux_line_end.end_point.z,     # 12
 
-                a_dim.line.start_point.x,
-                a_dim.line.start_point.y,
-                a_dim.line.start_point.z,
+                a_dim.line.start_point.x,           # 13
+                a_dim.line.start_point.y,           # 14
+                a_dim.line.start_point.z,           # 15
 
-                a_dim.line.end_point.x,
-                a_dim.line.end_point.y,
-                a_dim.line.end_point.z,
+                a_dim.line.end_point.x,             # 16
+                a_dim.line.end_point.y,             # 17
+                a_dim.line.end_point.z,             # 18
 
-                a_dim.textpoint.x,
-                a_dim.textpoint.y,
-                a_dim.textpoint.z,
+                a_dim.textpoint.x,                  # 19
+                a_dim.textpoint.y,                  # 20
+                a_dim.textpoint.z,                  # 21
 
-                a_dim.text,
-                a_dim.TEXT_SIZE)
+                a_dim.text,                         # 22
+                a_dim.TEXT_SIZE)                    # 23
 
-        self.s_out = self.s_out + "module {0}()".format(*args)
-        self.s_out = self.s_out + "{\n"
-        self.s_out = self.s_out + "   module line(start, end, thickness = 0.1)\n"
-        self.s_out = self.s_out + "   {\n"
-        self.s_out = self.s_out + "         hull()\n"
-        self.s_out = self.s_out + "         {\n"
-        self.s_out = self.s_out + "            translate(start) sphere(thickness);\n"
-        self.s_out = self.s_out + "            translate(end) sphere(thickness);\n"
-        self.s_out = self.s_out + "         }\n"
-        self.s_out = self.s_out + "   }\n"
-        self.s_out = self.s_out + "   line([{1},{2},{3}],[{4},{5},{6}]);\n".format(*args)
-        self.s_out = self.s_out + "   line([{7},{8},{9}],[{10},{11},{12}]);\n".format(*args)
-        self.s_out = self.s_out + "   line([{13},{14},{15}],[{16},{17},{18}]);\n".format(*args)
+        self.s_out += f"# {a_dim.get_name()}\n"
+
         match a_dim.plane:
             case "yx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-yx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,180,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "xy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-xy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "zx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-zx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "xz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-xz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "yz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-yz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "zy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
-            case "-zy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                # startline
+                self.s_out += f"result = result.add(cq.Workplane('XY').vLineTo({a_dim.aux_line_start.end_point.y-a_dim.aux_line_start.start_point.y}).translate(({a_dim.aux_line_start.start_point.x, a_dim.aux_line_start.start_point.y, a_dim.aux_line_start.start_point.z})))\n"
+                # endline
+                self.s_out += f"result = result.add(cq.Workplane('XY').vLineTo({a_dim.aux_line_end.end_point.y-a_dim.aux_line_end.start_point.y}).translate(({a_dim.aux_line_end.start_point.x, a_dim.aux_line_end.start_point.y, a_dim.aux_line_end.start_point.z})))\n"
+        #     case "-yx":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,180,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "xy":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "-xy":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "zx":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "-zx":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "xz":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "-xz":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "yz":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "-yz":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "zy":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+        #     case "-zy":
+        #         self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
 
-            case other:
-                raise Exception (f"Unknown plan {a_dim.plane}")
+        #     case other:
+        #         raise Exception (f"Unknown plan {a_dim.plane}")
 
-        self.s_out = self.s_out + "};\n"
-        self.s_out = self.s_out + "color(\"black\") {0}();\n".format(*args)
+        # self.s_out = self.s_out + "};\n"
+        # self.s_out = self.s_out + "color(\"black\") {0}();\n".format(*args)
 
         pass
