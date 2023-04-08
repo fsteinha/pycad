@@ -1,12 +1,15 @@
 from pcad_pos import pos, rot
+from pcad_color import RGBColor
 import dimensioning as dim
 import traceback
 
+
 class obj:
-    def __init__(self, name:str = None, pos:pos=pos(),rot:rot=rot()) -> None:
+    def __init__(self, name:str = None, pos:pos=pos(),rot:rot=rot(), color:RGBColor = RGBColor()) -> None:
         self.pos = pos
         self.rot = rot
-        self.name = name
+        self.set_name(name)
+        self.set_color(color)
         pass
 
     def mov(self, mx=0, my=0, mz=0) -> None:
@@ -18,14 +21,24 @@ class obj:
         pass
 
     def set_name(self, name) -> None:
-        self.name = name
+        if name == None:
+            self.name = str(id(self))
+        else:
+            self.name = name
         pass
 
     def get_name(self) -> str:
-        if self.name == None:
-            self.name = str(id(self))
-
         return self.name
+
+    def set_color(self,color):
+        if (color in RGBColor.COLORS):
+            self.color = RGBColor(color)
+        elif (isinstance(color, RGBColor)):
+            self.color = color
+        else:
+            raise Exception(f"Not RGBColor object or an color setting {type(color)}")
+
+
 
 class pobj(obj):
     def __init__(self, pos: pos = pos(), rotate: rot=rot(), name:str = None) -> None:
