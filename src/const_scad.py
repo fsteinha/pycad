@@ -23,11 +23,14 @@ class scad_const(const):
         #p.wait()
 
     def cube(self, a_cube:cube):
-        self.s_out = self.s_out + f"//{a_cube.get_name()}\n"
         self.s_out = self.s_out + "\n"
+        self.s_out = self.s_out + f"//{a_cube.get_name()}\n"
         self.s_out = self.s_out + f"color([{a_cube.color.get_color_float()[0]},{a_cube.color.get_color_float()[1]},{a_cube.color.get_color_float()[2]}])translate([{a_cube.pos.x},{a_cube.pos.y},{a_cube.pos.z}]) rotate([{a_cube.rot.ax},{a_cube.rot.ay},{a_cube.rot.az}]) cube([{a_cube.dx},{a_cube.dy},{a_cube.dz}]);\n"
 
     def aobj(self, a_obj:cobj):
+        self.s_out = self.s_out + "\n"
+        self.s_out = self.s_out + f"//{a_obj.get_name()}\n"
+
         args = ("m_" + a_obj.get_name(),
                 a_obj.pos.x,a_obj.pos.y,a_obj.pos.z,
                 a_obj.pos.x,a_obj.pos.y,a_obj.pos.z,
@@ -39,6 +42,9 @@ class scad_const(const):
         self.s_out = self.s_out + "translate([{4},{5},{6}]) rotate([{7},{8},{9}]) {0}();\n".format(*args)
 
     def sobj(self, a_obj:sobj):
+        self.s_out = self.s_out + "\n"
+        self.s_out = self.s_out + f"//{a_obj.get_name()}\n"
+
         s_module = "m_" + a_obj.get_name()
         self.s_out = self.s_out + f"module {s_module}()"
         self.s_out = self.s_out + "{\n"

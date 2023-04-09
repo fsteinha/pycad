@@ -1,7 +1,7 @@
 from pcad_pos import pos, rot
 from pcad_color import RGBColor
 import dimensioning as dim
-import traceback
+import gc
 
 
 class obj:
@@ -22,7 +22,12 @@ class obj:
 
     def set_name(self, name) -> None:
         if name == None:
-            self.name = str(id(self))
+            self.name = None
+            for obj in gc.get_referrers(self):
+                if isinstance(obj, dict):
+                    for obj_name, value in obj.items():
+                        if value is self:
+                            self.name = obj_name
         else:
             self.name = name
         pass
