@@ -11,12 +11,21 @@ import exam_parse
 # Table dimensions
 ##############################################################################
 
-TABLE_HEIGTH = 600
-TABLE_INTER_HEIGH = 100
+TABLE_HEIGH = 600
+TABLE_INTER_HEIGH = 300 #must be 300 for the intermediate plate
 TABLE_DEPTH = 850
 TABLE_DEPTH_OFFSET = 1000
 TABLE_WITH  = 2000
 TABLE_SPACE_FROM_RIGTH = 600
+
+# Enviroment objects
+##############################################################################
+HEATING_HEIGH = 1000
+HEATING_WIDE  = 640
+HEATING_DEPTH = 150
+HEATING_POS_X = 740
+HEATING_POS_y = 850
+
 
 # Materials
 ##############################################################################
@@ -25,6 +34,12 @@ TABLE_SPACE_FROM_RIGTH = 600
 Unterkonstruktionslatte_2000_40_18 = pcad.cube(40, 18, 2000)
 # Rahmenholz https://www.bauhaus.info/latten-rahmen/rahmenholz/p/14612119
 Rahmenholz_2000_54_54 = pcad.cube(54, 54, 2000)
+
+# Enviroment object definition
+##############################################################################
+heating = pcad.cube(HEATING_WIDE, HEATING_DEPTH,HEATING_HEIGH)
+heating.pos = pcad.pos(HEATING_POS_X, HEATING_POS_y, 0)
+heating.set_color(pcad.RGBColor.DARK_GREY)
 
 # construction contrains
 ##############################################################################
@@ -44,37 +59,37 @@ BARY_Z = Unterkonstruktionslatte_2000_40_18.dx
 ##############################################################################
 
 pole_t1 = pcad.sobj("pole_t1")
-pole_t1.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGTH))
-pole_t1.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
-pole_t1.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
+pole_t1.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGH))
+pole_t1.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
+pole_t1.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
 pole_t1.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 pole_t1.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 
 pole_t2 = pcad.sobj("pole_t2")
-pole_t2.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGTH))
-pole_t2.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
-pole_t2.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
+pole_t2.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGH))
+pole_t2.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
+pole_t2.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
 pole_t2.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 pole_t2.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 
 pole_t3 = pcad.sobj("pole_t3")
-pole_t3.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGTH))
-pole_t3.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_HEIGTH-BARX_Z)))
-pole_t3.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
+pole_t3.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGH))
+pole_t3.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_HEIGH-BARX_Z)))
+pole_t3.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
 pole_t3.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_INTER_HEIGH-BARX_Z)))
 pole_t3.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 
 pole_t4 = pcad.sobj("pole_t4")
-pole_t4.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGTH))
-pole_t4.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
-pole_t4.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
+pole_t4.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGH))
+pole_t4.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
+pole_t4.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
 pole_t4.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 pole_t4.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 
 pole_t5 = pcad.sobj("pole_t5")
-pole_t5.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGTH))
-pole_t5.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_HEIGTH-BARX_Z)))
-pole_t5.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)))
+pole_t5.add(pcad.cube(POLE_X, POLE_Y, TABLE_HEIGH))
+pole_t5.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_HEIGH-BARX_Z)))
+pole_t5.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_HEIGH-BARX_Z)))
 pole_t5.add(pcad.cube(POLE_X, BARX_Y, BARX_Z, pos=pcad.pos(0,POLE_Y-BARX_Y,TABLE_INTER_HEIGH-BARX_Z)))
 pole_t5.add(pcad.cube(BARY_X, POLE_Y, BARX_Z, pos=pcad.pos(0,0,TABLE_INTER_HEIGH-BARX_Z)))
 
@@ -131,11 +146,11 @@ pole_middle_behind.rot = pcad.rot(0,0,-90)
 pole_middle_behind.set_name(None)
 
 cross_bar_front_top = copy.copy(crossbar_x_front)
-cross_bar_front_top.pos = pcad.pos(0,0,TABLE_HEIGTH-BARX_Z)
+cross_bar_front_top.pos = pcad.pos(0,0,TABLE_HEIGH-BARX_Z)
 cross_bar_front_top.set_name(None)
 
 cross_bar_behind_top = copy.copy(crossbar_x_behind)
-cross_bar_behind_top.pos = pcad.pos(Unterkonstruktionslatte_2000_40_18.dy,TABLE_DEPTH-BARX_Y,TABLE_HEIGTH-BARX_Z)
+cross_bar_behind_top.pos = pcad.pos(Unterkonstruktionslatte_2000_40_18.dy,TABLE_DEPTH-BARX_Y,TABLE_HEIGH-BARX_Z)
 cross_bar_behind_top.set_name(None)
 
 cross_bar_front_mid = copy.copy(crossbar_x_front)
@@ -147,11 +162,11 @@ cross_bar_behind_mid.pos = pcad.pos(0,TABLE_DEPTH-BARX_Y,TABLE_INTER_HEIGH-BARX_
 cross_bar_behind_mid.set_name(None)
 
 cross_bar_left = copy.copy(crossbar_y_top)
-cross_bar_left.pos = pcad.pos(0,cross_bar_left.dx,TABLE_HEIGTH-BARX_Z)
+cross_bar_left.pos = pcad.pos(0,cross_bar_left.dx,TABLE_HEIGH-BARX_Z)
 cross_bar_left.set_name(None)
 
 cross_bar_right = copy.copy(crossbar_y_top)
-cross_bar_right.pos = pcad.pos(TABLE_WITH-cross_bar_right.dx,cross_bar_right.dx,TABLE_HEIGTH-BARX_Z)
+cross_bar_right.pos = pcad.pos(TABLE_WITH-cross_bar_right.dx,cross_bar_right.dx,TABLE_HEIGH-BARX_Z)
 cross_bar_right.set_name(None)
 
 cross_bar_left_mid = copy.copy(crossbar_y)
@@ -167,6 +182,7 @@ cross_bar_right_mid.set_name(None)
 
 if exam_parse.M_SCAD==True:
     scad = const_scad.scad_const(exam_parse.get_const_name(__file__),
+                                 heating,
                                  pole_left_behind,
                                  pole_left_front,
                                  pole_right_behind,
