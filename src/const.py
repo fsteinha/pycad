@@ -8,8 +8,13 @@ class const:
         self.l_obj = []
         self.s_filename = "pycad_" + name
         for arg in l_obj:
-            if self.add(arg) == False:
-                raise Exception(f"Unallowed type {type(arg)}")
+            if type(arg) == list:
+                for item in arg:
+                    if self.add(item) == False:
+                        raise Exception(f"Unallowed type  {type(item)} in list {arg}")
+            else:
+                if self.add(arg) == False:
+                    raise Exception(f"Unallowed type {type(arg)}")
 
     def add(self, a_obj) -> bool:
         if isinstance(a_obj, obj):

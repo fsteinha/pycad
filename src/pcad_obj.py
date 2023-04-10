@@ -33,6 +33,8 @@ class obj:
         pass
 
     def get_name(self) -> str:
+        if self.name == None:
+            self.set_name(None)
         return self.name
 
     def set_color(self,color):
