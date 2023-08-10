@@ -1,15 +1,19 @@
 from pcad_pos import pos, rot
 from pcad_color import RGBColor
+from pcad_purch import purch
 import dimensioning as dim
 import gc
 
 
 class obj:
-    def __init__(self, name:str = None, pos:pos=pos(),rot:rot=rot(), color:RGBColor = RGBColor()) -> None:
+    def __init__(self, name:str = None, pos:pos=pos(),rot:rot=rot(), color:RGBColor = RGBColor(), info:str="", purch:purch=None) -> None:
         self.pos = pos
         self.rot = rot
         self.set_name(name)
         self.set_color(color)
+        self.info = []
+        self.add_info(info)
+        self.purch = purch
         pass
 
     def mov(self, mx=0, my=0, mz=0) -> None:
@@ -45,16 +49,18 @@ class obj:
         else:
             raise Exception(f"Not RGBColor object or an color setting {type(color)}")
 
+    def add_info(self, info:str) -> None:
+        self.info.append(info)
 
 
 class pobj(obj):
-    def __init__(self, pos: pos = pos(), rotate: rot=rot(), name:str = None) -> None:
-        super().__init__(name, pos, rotate)
+    def __init__(self, pos: pos = pos(), rot:rot=rot(), name:str = None,info:str="", purch:purch=None) -> None:
+        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch)
         pass
 
 class cobj(obj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot: rot=rot(), *args) -> None:
-        super().__init__(name, pos, rot)
+    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch=purch, *args) -> None:
+        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch)
         self.l_obj = []
         for arg in args:
             self.add(arg)
@@ -72,10 +78,10 @@ class cobj(obj):
         return self.l_obj
 
 class aobj(cobj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), *args) -> None:
-        super().__init__(name, pos, rot, *args)
+    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
+        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
         pass
 class sobj(cobj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), *args) -> None:
-        super().__init__(name, pos, rot, *args)
+    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
+        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=None, *args)
         pass
