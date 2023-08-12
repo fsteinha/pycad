@@ -27,6 +27,11 @@ class scad_const(const):
         self.s_out = self.s_out + f"//{a_cube.get_name()}\n"
         self.s_out = self.s_out + f"color([{a_cube.color.get_color_float()[0]},{a_cube.color.get_color_float()[1]},{a_cube.color.get_color_float()[2]}])translate([{a_cube.pos.x},{a_cube.pos.y},{a_cube.pos.z}]) rotate([{a_cube.rot.ax},{a_cube.rot.ay},{a_cube.rot.az}]) cube([{a_cube.dx},{a_cube.dy},{a_cube.dz}]);\n"
 
+    def cylinder(self, a_cylinder:cylinder):
+        self.s_out = self.s_out + "\n"
+        self.s_out = self.s_out + f"//{a_cylinder.get_name()}\n"
+        self.s_out = self.s_out + f"color([{a_cylinder.color.get_color_float()[0]},{a_cylinder.color.get_color_float()[1]},{a_cylinder.color.get_color_float()[2]}])translate([{a_cylinder.pos.x},{a_cylinder.pos.y},{a_cylinder.pos.z}]) rotate([{a_cylinder.rot.ax},{a_cylinder.rot.ay},{a_cylinder.rot.az}]) cylinder(h={a_cylinder.dh},r1={a_cylinder.drb},r2={a_cylinder.drt}, $fn=100);\n"
+
     def aobj(self, a_obj:cobj):
         self.s_out = self.s_out + "\n"
         self.s_out = self.s_out + f"//{a_obj.get_name()}\n"
@@ -52,7 +57,7 @@ class scad_const(const):
         self.iterate_obj(a_obj.get())
         self.s_out = self.s_out + "  };\n"
         self.s_out = self.s_out + "};\n"
-        self.s_out = self.s_out + f"translate([{a_obj.pos.x},{a_obj.pos.y},{a_obj.pos.z}]) rotate([{a_obj.rot.ax},{a_obj.rot.ay},{a_obj.rot.az}]) {s_module}();\n"
+        self.s_out = self.s_out + f"color([{a_obj.color.get_color_float()[0]},{a_obj.color.get_color_float()[1]},{a_obj.color.get_color_float()[2]}]) translate([{a_obj.pos.x},{a_obj.pos.y},{a_obj.pos.z}]) rotate([{a_obj.rot.ax},{a_obj.rot.ay},{a_obj.rot.az}]) {s_module}();\n"
 
     def dim(self, a_dim:dim.Dimensioning):
         args = ("m_dim_" + a_dim.get_name(),
@@ -85,11 +90,11 @@ class scad_const(const):
                 a_dim.textpoint.z,
 
                 a_dim.text,
-                a_dim.TEXT_SIZE)
+                a_dim.prop.text_size)
 
         self.s_out = self.s_out + "module {0}()".format(*args)
         self.s_out = self.s_out + "{\n"
-        self.s_out = self.s_out + "   module line(start, end, thickness = 0.1)\n"
+        self.s_out = self.s_out + f"   module line(start, end, thickness = {a_dim.prop.line_thickness})\n"
         self.s_out = self.s_out + "   {\n"
         self.s_out = self.s_out + "         hull()\n"
         self.s_out = self.s_out + "         {\n"

@@ -17,7 +17,7 @@ class const:
                     raise Exception(f"Unallowed type {type(arg)}")
 
     def add(self, a_obj) -> bool:
-        if isinstance(a_obj, obj):
+        if isinstance(a_obj, obj) or isinstance(a_obj, dim.Dimensioning):
             self.l_obj.append(a_obj)
         else:
             return False
@@ -27,12 +27,16 @@ class const:
         for i_obj in l_obj:
             if isinstance(i_obj, cube):
                 self.cube(i_obj)
+            elif isinstance(i_obj, cylinder):
+                self.cylinder(i_obj)
             elif isinstance(i_obj, aobj):
                 self.aobj(i_obj)
             elif isinstance(i_obj, dim.Dimensioning):
                 self.dim(i_obj)
             elif isinstance(i_obj, sobj):
                 self.sobj(i_obj)
+            elif isinstance(i_obj, dim):
+                self.dim(i_obj)
             else:
                 raise Exception (f"Unknown {type(i_obj)}")
 
@@ -40,6 +44,9 @@ class const:
         raise Exception ("Function is virtual")
 
     def cube(self):
+        raise Exception ("Function is virtual")
+
+    def cylinder(self):
         raise Exception ("Function is virtual")
 
     def aobj(self):
