@@ -18,3 +18,16 @@ match args.m:
 
 def get_const_name(filename):
     return re.sub(r'\..+','',os.path.basename(filename))
+
+def exam_execute(objs, purch = False):
+    if M_SCAD==True:
+        import const_scad
+        scad = const_scad.scad_const(get_const_name(__file__), objs)
+        scad.show()
+    elif M_CQ==True:
+        import const_cadquery
+        constcq = const_cadquery.cq_const(get_const_name(__file__), objs)
+        constcq.show()
+    else:
+        raise Exception ("Unknown option")
+

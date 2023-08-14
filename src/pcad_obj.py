@@ -84,5 +84,5 @@ class aobj(cobj):
 
 class sobj(cobj):
     def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
-        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=None, *args)
+        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
         pass
