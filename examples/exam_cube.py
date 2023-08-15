@@ -1,9 +1,10 @@
 import sys
 sys.path.append("../pcad")
+sys.path.append("../prog")
 
 import pcad as pcad
 import pcad_dim as dim
-import exam_parse
+import prog_parse
 
 cube = pcad.aobj("cube_")
 cube.add(pcad.cube(10, 10, 10))
@@ -32,4 +33,4 @@ cube.add(dim.Dimensioning(dim.Point(10,10,0),dim.Point(10,10,10),plane="yz",text
 cube.add(dim.Dimensioning(dim.Point(10,0,0),dim.Point(10,0,10),plane="-yz",text="-yz"))
 cube.add(dim.Dimensioning(dim.Point(0,0,0),dim.Point(0,0,10),plane="-yz",text="-yz"))
 
-exam_parse.exam_execute([cube])
+prog_parse.exam_execute([cube])

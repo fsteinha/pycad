@@ -1,10 +1,11 @@
 import sys
 sys.path.append("../pcad")
+sys.path.append("../prog")
 import copy
 
 import pcad as pcad
 import pcad_dim as dim
-import exam_parse
+import prog_parse
 
 # Table dimensions
 ##############################################################################
@@ -173,5 +174,5 @@ obj_list = [
 
 # show
 ##############################################################################
-exam_parse.exam_execute(obj_list)
+prog_parse.exam_execute(obj_list)
 

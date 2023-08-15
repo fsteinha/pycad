@@ -1,10 +1,10 @@
 import sys
 sys.path.append("../pcad")
-sys.path.append("../const")
+sys.path.append("../prog")
 
 import pcad as pcad
 import pcad_dim as dim
-import exam_parse
+import prog_parse
 import copy
 
 VERSION_POST_120_Bar_42_4_verzinkt = 1
@@ -227,5 +227,5 @@ l_objs.append(dip_bar_end)
 
 # Execute
 ##############################################################################
-exam_parse.exam_execute(l_objs)
+prog_parse.exam_execute(l_objs)
 pcad.purch_report(l_objs,None)

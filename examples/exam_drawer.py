@@ -1,9 +1,11 @@
 import sys
 sys.path.append("../pcad")
+sys.path.append("../prog")
+
 
 import pcad as pcad
 import pcad_dim as dim
-import exam_parse
+import prog_parse
 
 
 thickness = 6;
@@ -37,4 +39,4 @@ drawer.add(dim.Dimensioning(dim.Point(0,drawer_y,0),dim.Point(0,0,0),plane="-xy"
 
 drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(-1*((front_x-drawer_x)/2) + front_x,drawer_y + thickness,0),plane="yx"))
 
-exam_parse.exam_execute([drawer])
+prog_parse.exam_execute([drawer])
