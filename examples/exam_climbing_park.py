@@ -1,8 +1,9 @@
 import sys
-sys.path.append("../src")
+sys.path.append("../pcad")
+sys.path.append("../const")
 
 import pcad as pcad
-import dimensioning as dim
+import pcad_dim as dim
 import exam_parse
 import copy
 
@@ -33,7 +34,6 @@ purch_post_120 = pcad.purch(link="https://www.bauhaus.info/konstruktionsvollholz
                     price_type=pcad.price_type.PRICE_TYPE_DIM,
                     price_dim=DIM_ALL_Z/1000)
 
-
 purch_post_100 = pcad.purch(link="https://www.bauhaus.info/konstruktionsvollholz/konstruktionsvollholz-nsi/p/20121574",
                     price = 9.4,
                     price_type=pcad.price_type.PRICE_TYPE_DIM,
@@ -48,6 +48,10 @@ purch_pull_up_bar_edelstahl = pcad.purch(link="https://www.prokilo.de",
                     price = 46.30,
                     price_type=pcad.price_type.PRICE_TYPE_PCS,
                     price_dim=None)
+
+purch_post_ancor = pcad.purch(link="https://www.amazon.de/H-Pfostenanker-H-Anker-schwer-Pfostenanker-feuerverzinkt/dp/B07D9L13KQ/ref=sr_1_17?keywords=pfostentr%C3%A4ger+120x120&qid=1691686086&sr=8-17",
+                               price = 9.99,
+                               price_type=pcad.price_type.PRICE_TYPE_PCS)
 
 
 # Settings
@@ -78,13 +82,6 @@ elif VERSION == VERSION_POST_100_Bar_42_4_edelstahl:
     DIM_PULL_UP_BAR_THICK = 2.0
 else:
     raise Exception ("Unknown version")
-
-
-purch_post_träger = pcad.purch(link="https://www.amazon.de/H-Pfostenanker-H-Anker-schwer-Pfostenanker-feuerverzinkt/dp/B07D9L13KQ/ref=sr_1_17?keywords=pfostentr%C3%A4ger+120x120&qid=1691686086&sr=8-17",
-                               price = 9.99,
-                               price_type=pcad.price_type.PRICE_TYPE_PCS)
-
-
 
 
 # object list

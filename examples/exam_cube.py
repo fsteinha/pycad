@@ -1,10 +1,8 @@
 import sys
-sys.path.append("../src")
+sys.path.append("../pcad")
 
 import pcad as pcad
-import const_scad
-import dimensioning as dim
-import const_cadquery
+import pcad_dim as dim
 import exam_parse
 
 cube = pcad.aobj("cube_")
@@ -34,9 +32,4 @@ cube.add(dim.Dimensioning(dim.Point(10,10,0),dim.Point(10,10,10),plane="yz",text
 cube.add(dim.Dimensioning(dim.Point(10,0,0),dim.Point(10,0,10),plane="-yz",text="-yz"))
 cube.add(dim.Dimensioning(dim.Point(0,0,0),dim.Point(0,0,10),plane="-yz",text="-yz"))
 
-if exam_parse.M_SCAD==True:
-    scad = const_scad.scad_const(exam_parse.get_const_name(__file__), cube)
-    scad.show()
-else:
-    constcq = const_cadquery.cq_const(exam_parse.get_const_name(__file__), cube)
-    constcq.show()
+exam_parse.exam_execute([cube])

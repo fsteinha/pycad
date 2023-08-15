@@ -1,10 +1,8 @@
 import sys
-sys.path.append("../src")
+sys.path.append("../pcad")
 
 import pcad as pcad
-import const_scad
-import const_cadquery
-import dimensioning as dim
+import pcad_dim as dim
 import exam_parse
 
 
@@ -39,11 +37,4 @@ drawer.add(dim.Dimensioning(dim.Point(0,drawer_y,0),dim.Point(0,0,0),plane="-xy"
 
 drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(-1*((front_x-drawer_x)/2) + front_x,drawer_y + thickness,0),plane="yx"))
 
-if exam_parse.M_SCAD==True:
-    scad = const_scad.scad_const(exam_parse.get_const_name(__file__), drawer)
-    scad.show()
-else:
-    constcq = const_cadquery.cq_const(exam_parse.get_const_name(__file__), drawer)
-    constcq.show()
-
-
+exam_parse.exam_execute([drawer])

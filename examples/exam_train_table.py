@@ -1,11 +1,9 @@
 import sys
-sys.path.append("../src")
+sys.path.append("../pcad")
 import copy
 
 import pcad as pcad
-import const_scad
-import dimensioning as dim
-import const_cadquery
+import pcad_dim as dim
 import exam_parse
 
 # Table dimensions
@@ -175,11 +173,5 @@ obj_list = [
 
 # show
 ##############################################################################
+exam_parse.exam_execute(obj_list)
 
-if exam_parse.M_SCAD==True:
-    scad = const_scad.scad_const(exam_parse.get_const_name(__file__),
-                                 obj_list)
-    scad.show()
-else:
-    constcq = const_cadquery.cq_const(exam_parse.get_const_name(__file__), pole_t1)
-    constcq.show()

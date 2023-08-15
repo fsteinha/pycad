@@ -1,7 +1,7 @@
 from pcad_pos import pos, rot
 from pcad_color import RGBColor
 from pcad_purch import purch
-import dimensioning as dim
+import pcad_dim as dim
 import gc
 
 
