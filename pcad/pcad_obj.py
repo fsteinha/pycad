@@ -1,7 +1,8 @@
-from pcad_pos import pos, rot
-from pcad_color import RGBColor
-from pcad_purch import purch
-import pcad_dim as dim
+import sys
+sys.path.append("../")
+from pcad.pcad_pos import pos, rot
+from pcad.pcad_color import RGBColor
+from pcad.pcad_purch import purch
 import gc
 
 
@@ -53,36 +54,8 @@ class obj:
         self.info.append(info)
 
 
-class pobj(obj):
-    def __init__(self, pos: pos = pos(), rot:rot=rot(), name:str = None,info:str="", purch:purch=None) -> None:
-        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch)
-        pass
 
-class cobj(obj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch=purch, *args) -> None:
-        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch)
-        self.l_obj = []
-        for arg in args:
-            self.add(arg)
-        pass
 
-    def add(self, a_obj) -> bool:
-        if isinstance(a_obj, obj) or \
-            isinstance(a_obj, dim.Dimensioning):
-            self.l_obj.append(a_obj)
-        else:
-            raise Exception(f"Unallowed type {type(a_obj)}")
-        return True
 
-    def get(self) -> list:
-        return self.l_obj
 
-class aobj(cobj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
-        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
-        pass
 
-class sobj(cobj):
-    def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
-        super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
-        pass

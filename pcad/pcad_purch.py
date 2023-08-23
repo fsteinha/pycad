@@ -1,8 +1,10 @@
 """
     class for purchase information
 """
+import sys
+sys.path.append("../")
 
-import pcad_obj_iterate as pcad_obj_iterate
+import pcad.pcad_obj_iterate as pcad_obj_iterate
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors

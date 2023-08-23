@@ -2,7 +2,6 @@ import argparse
 import re
 import os
 import sys
-sys.path.append("../const")
 
 # Functions
 ##############################################################################
@@ -31,7 +30,8 @@ def exam_execute(objs:list, purch = False, file_name:str=sys.argv[0]):
     if file_name == None:
         file_name = get_const_name(__file__)
     if M_SCAD==True:
-        import const_scad
+        sys.path.append("../")
+        import const.scad.const_scad as const_scad
         scad = const_scad.scad_const(file_name, objs)
         scad.show()
     elif M_CQ==True:

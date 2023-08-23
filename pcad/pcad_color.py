@@ -1,3 +1,6 @@
+import sys
+sys.path.append("../")
+
 # color class for pcad
 
 class RGBColor:

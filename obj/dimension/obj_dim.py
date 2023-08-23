@@ -1,4 +1,13 @@
+import sys
+import sys
+sys.path.append("../..")
+from const import const_obj
+
 import math
+
+class dim_const(const_obj.const_obj_base):
+    pass
+
 
 class Point:
     x = None
@@ -10,19 +19,18 @@ class Point:
         self.y = y
         self.z = z
 
-
     def __add__(self, other):
         x = self.x + other.x
         y = self.y + other.y
         z = self.z + other.z
         return Point(x, y, z)
 
-
     def __sub__(self, other):
         x = self.x - other.x
         y = self.y - other.y
         z = self.z - other.z
         return Point(x, y, z)
+
 class Line:
     def __init__(self, start_point, end_point):
         self.start_point = start_point
@@ -37,6 +45,7 @@ class Line:
         x1, y1, z1 = self.start_point.x, self.start_point.y, self.start_point.z
         x2, y2, z2 = self.end_point.x, self.end_point.y, self.end_point.z
         return Point((x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2)
+
 class Dimensioning_Prop:
     def __init__(self, aux_line_lenght=10,
                  line_offset=2,
@@ -71,6 +80,7 @@ class Dimensioning:
         self.textpoint = None
         self.text = text
         self.prop = prop
+        self.const = dim_const()
         self.draw()
 
     def calculate_length(self, start_point:Point, end_point:Point):

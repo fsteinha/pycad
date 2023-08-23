@@ -1,3 +1,6 @@
+import sys
+sys.path.append("../")
+
 # helper function for
 import pcad as pcad
 

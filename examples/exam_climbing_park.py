@@ -1,10 +1,9 @@
 import sys
-sys.path.append("../pcad")
-sys.path.append("../prog")
+sys.path.append("../")
 
-import pcad as pcad
-import pcad_dim as dim
-import prog_parse
+import pcad.pcad as pcad
+import pcad.pcad_dim as dim
+import prog.prog_parse as prog_parse
 import copy
 
 VERSION_POST_120_Bar_42_4_verzinkt = 1
