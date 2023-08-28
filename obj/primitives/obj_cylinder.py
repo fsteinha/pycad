@@ -8,7 +8,7 @@ class cylinder_const(const_obj.const_obj_base):
 
 class cylinder(pcad_obj.obj):
     def __init__(self,  drb:float=10.0, drt:float = 10.0, dh:float=10.0, name = None, pos:pcad_pos.pos=pcad_pos.pos(), rot:pcad_pos.rot=pcad_pos.rot()) -> None:
-        super().__init__(pos, rot, name)
+        super().__init__(name, pos, rot)
         self.drb = drb
         self.drt = drt
         self.dh  = dh

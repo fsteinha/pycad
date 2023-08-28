@@ -14,6 +14,6 @@ class const_strat_meta(type):
         return cls._instances[cls]
 
 class const_strat_base(metaclass=const_strat_meta):
-    def proceed(self) -> None:
+    def proceed(self, obj) -> None:
         raise Exception ("virtual method inheritance missing")
 

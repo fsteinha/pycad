@@ -25,6 +25,6 @@ class const_obj_base(metaclass=const_obj_meta):
     def set_strategy(self, strategy:const_strat_base):
         self.strategy = strategy
 
-    def proceed(self):
-        self.strategy.proceed(self)
+    def proceed(self, obj):
+        return self.strategy.proceed(obj)
 

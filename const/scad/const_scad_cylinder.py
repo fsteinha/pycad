@@ -21,9 +21,10 @@ class cylinder_const_scad(const_strat_base):
         Args:
             a_cylinder (cylinder): cylinder data object
         """
-        self.s_out = self.s_out + "\n"
-        self.s_out = self.s_out + f"//{a_cylinder.get_name()}\n"
-        self.s_out = self.s_out + f"color([{a_cylinder.color.get_color_float()[0]},{a_cylinder.color.get_color_float()[1]},{a_cylinder.color.get_color_float()[2]}])"
-        self.s_out = self.s_out + f"translate([{a_cylinder.pos.x},{a_cylinder.pos.y},{a_cylinder.pos.z}])"
-        self.s_out = self.s_out + f"rotate([{a_cylinder.rot.ax},{a_cylinder.rot.ay},{a_cylinder.rot.az}])"
-        self.s_out = self.s_out + f"cylinder(h={a_cylinder.dh},r1={a_cylinder.drb},r2={a_cylinder.drt}, $fn=100);\n"
+        s_out = "\n"
+        s_out +=  f"//{a_cylinder.get_name()}\n"
+        s_out +=  f"color([{a_cylinder.color.get_color_float()[0]},{a_cylinder.color.get_color_float()[1]},{a_cylinder.color.get_color_float()[2]}])"
+        s_out +=  f"translate([{a_cylinder.pos.x},{a_cylinder.pos.y},{a_cylinder.pos.z}])"
+        s_out +=  f"rotate([{a_cylinder.rot.ax},{a_cylinder.rot.ay},{a_cylinder.rot.az}])"
+        s_out +=  f"cylinder(h={a_cylinder.dh},r1={a_cylinder.drb},r2={a_cylinder.drt}, $fn=100);\n"
+        return s_out

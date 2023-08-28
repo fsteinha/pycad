@@ -53,51 +53,51 @@ class dim_const_scad(const_strat_base):
                 a_dim.text,
                 a_dim.prop.text_size)
 
-        self.s_out = self.s_out + "module {0}()".format(*args)
-        self.s_out = self.s_out + "{\n"
-        self.s_out = self.s_out + f"   module line(start, end, thickness = {a_dim.prop.line_thickness})\n"
-        self.s_out = self.s_out + "   {\n"
-        self.s_out = self.s_out + "         hull()\n"
-        self.s_out = self.s_out + "         {\n"
-        self.s_out = self.s_out + "            translate(start) sphere(thickness);\n"
-        self.s_out = self.s_out + "            translate(end) sphere(thickness);\n"
-        self.s_out = self.s_out + "         }\n"
-        self.s_out = self.s_out + "   }\n"
-        self.s_out = self.s_out + "   line([{1},{2},{3}],[{4},{5},{6}]);\n".format(*args)
-        self.s_out = self.s_out + "   line([{7},{8},{9}],[{10},{11},{12}]);\n".format(*args)
-        self.s_out = self.s_out + "   line([{13},{14},{15}],[{16},{17},{18}]);\n".format(*args)
+        s_out = "module {0}()".format(*args)
+        s_out +=  "{\n"
+        s_out +=  f"   module line(start, end, thickness = {a_dim.prop.line_thickness})\n"
+        s_out +=  "   {\n"
+        s_out +=  "         hull()\n"
+        s_out +=  "         {\n"
+        s_out +=  "            translate(start) sphere(thickness);\n"
+        s_out +=  "            translate(end) sphere(thickness);\n"
+        s_out +=  "         }\n"
+        s_out +=  "   }\n"
+        s_out +=  "   line([{1},{2},{3}],[{4},{5},{6}]);\n".format(*args)
+        s_out +=  "   line([{7},{8},{9}],[{10},{11},{12}]);\n".format(*args)
+        s_out +=  "   line([{13},{14},{15}],[{16},{17},{18}]);\n".format(*args)
         match a_dim.plane:
             case "yx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-yx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,180,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([0,180,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "xy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([0,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-xy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,0,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([0,0,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "zx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-zx":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,0,0]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "xz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-xz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([0,270,90]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "yz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-yz":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,270,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "zy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
             case "-zy":
-                self.s_out = self.s_out + "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
+                s_out +=  "   translate([{19},{20},{21}]) rotate ([90,0,270]) linear_extrude (height = 0.1) {{text(\"{22}\", size={23}, halign=\"center\");}}\n".format(*args)
 
             case other:
                 raise Exception (f"Unknown plan {a_dim.plane}")
 
-        self.s_out = self.s_out + "};\n"
-        self.s_out = self.s_out + "color(\"black\") {0}();\n".format(*args)
-
+        s_out +=  "};\n"
+        s_out +=  "color(\"black\") {0}();\n".format(*args)
+        return s_out
         pass
 
 

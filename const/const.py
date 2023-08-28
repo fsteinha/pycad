@@ -59,12 +59,11 @@ class const:
         """
         if (type(a_obj) == self.d_const) and (a_const != self[type(a_obj)]):
             raise Exception (f"Double definition of caller {type(a_obj)}, {self[type(a_obj)]}, {a_const}")
-        print (type(a_obj))
         self.d_const[type(a_obj)] = a_const
 
     def iterate_obj(self, l_obj):
         for i_obj in l_obj:
-            self.s_out += i_obj.const.proceed()
+            self.s_out += i_obj.const.proceed(i_obj)
 
     def show(self):
         raise Exception ("Function is virtual")

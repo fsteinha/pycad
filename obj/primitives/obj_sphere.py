@@ -8,7 +8,7 @@ class sphere_const(const_obj.const_obj_base):
 
 class sphere(pcad_obj.obj):
     def __init__(self, dr:float = 10.0, name = None, pos:pcad_pos.pos=pcad_pos.pos(), rot:pcad_pos.rot=pcad_pos.rot()) -> None:
-        super().__init__(pos, rot, name)
+        super().__init__(name, pos, rot)
         self.dr = dr
         self.const = sphere_const()
 

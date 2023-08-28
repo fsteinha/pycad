@@ -27,7 +27,6 @@ class scad_const(const):
 
         test = aobj_const()
         test.set_strategy(aobj_const_scad())
-        print (test.strategy)
         sobj_const().set_strategy(sobj_const_scad())
         dim_const().set_strategy(dim_const_scad())
         cube_const().set_strategy(cube_const_scad())

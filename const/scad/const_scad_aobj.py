@@ -30,8 +30,9 @@ class aobj_const_scad(const_strat_base):
                 a_obj.rot.ax,a_obj.rot.ay,a_obj.rot.az)
         s_out += "module {0}()".format(*args)
         s_out += "{\n"
-        for i_obj in a_obj.get():
-            s_out += i_obj.const.proceed()
+        l_obj = a_obj.get()
+        for i_obj in l_obj:
+            s_out += i_obj.const.proceed(i_obj)
         s_out += "};\n"
         s_out += "translate([{4},{5},{6}]) rotate([{7},{8},{9}]) {0}();\n".format(*args)
         return s_out
