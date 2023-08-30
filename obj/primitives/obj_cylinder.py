@@ -12,5 +12,5 @@ class cylinder(pcad_obj.obj):
         self.drb = drb
         self.drt = drt
         self.dh  = dh
-        self.const = cylinder_const
+        self.const = cylinder_const()
 

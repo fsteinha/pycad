@@ -23,25 +23,26 @@ class scad_const(const):
     def __init__(self, name, *l_obj) -> None:
         super().__init__(name, *l_obj)
         self.s_filename += ".scad"
-        self.s_ecall = "openscad"
-
-        test = aobj_const()
-        test.set_strategy(aobj_const_scad())
+        
+        aobj_const().set_strategy(aobj_const_scad())
         sobj_const().set_strategy(sobj_const_scad())
         dim_const().set_strategy(dim_const_scad())
         cube_const().set_strategy(cube_const_scad())
-        cylinder_const().set_strategy(cylinder_const_scad())
+        cylinder_c = cylinder_const()
+        cylinder_c.set_strategy(cylinder_const_scad())
+        test = cylinder_const()
+        print(test.strategy)
         sphere_const().set_strategy(sphere_const_scad())
 
-    def show(self):
+    def show(self, s_call="openscad"):
         self.iterate_obj(self.l_obj)
         f_file = open(self.s_filename, "w")
         f_file.write(self.s_out)
         f_file.close()
         print(f"{self.s_filename} created")
-        s_call = f"{self.s_ecall} {self.s_filename}"
+        s_call = f"{s_call} {self.s_filename}"
         print (s_call)
-        p = subprocess.Popen([self.s_ecall, self.s_filename], stdout = subprocess.PIPE)
+        p = subprocess.Popen([s_call, self.s_filename], stdout = subprocess.PIPE)
         print ("scad started")
         #p.wait()
 

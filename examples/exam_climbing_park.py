@@ -2,7 +2,6 @@ import sys
 sys.path.append("../")
 
 import pcad.pcad as pcad
-import pcad.pcad_dim as dim
 import prog.prog_parse as prog_parse
 import copy
 
@@ -88,8 +87,8 @@ l_objs = []
 test_objs = []
 
 # dimension properties
-dim_prop=dim.Dimensioning_Prop(aux_line_lenght=100, line_offset=20, text_offset=20, text_size=50, line_thickness=5)
-dim_prop_2=dim.Dimensioning_Prop(aux_line_lenght=200, line_offset=20, text_offset=20, text_size=50, line_thickness=5)
+dim_prop=pcad.Dimensioning_Prop(aux_line_lenght=100, line_offset=20, text_offset=20, text_size=50, line_thickness=5)
+dim_prop_2=pcad.Dimensioning_Prop(aux_line_lenght=200, line_offset=20, text_offset=20, text_size=50, line_thickness=5)
 
 # central objects
 ##############################################################################
@@ -155,22 +154,22 @@ carrier_left.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_AL
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-dim_front_middle=dim.Dimensioning(dim.Point(DIM_POST/2,DIM_POST/2,0),dim.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),plane="-zy",prop=dim_prop)
+dim_front_middle=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),plane="-zy",prop=dim_prop)
 l_objs.append(dim_front_middle)
 
-dim_middle_end=dim.Dimensioning(dim.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),dim.Point(DIM_POST/2,DIM_ALL_Y+DIM_POST/2,0),plane="-zy",prop=dim_prop)
+dim_middle_end=pcad.Dimensioning(pcad.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),pcad.Point(DIM_POST/2,DIM_ALL_Y+DIM_POST/2,0),plane="-zy",prop=dim_prop)
 l_objs.append(dim_middle_end)
 
-dim_front_end=dim.Dimensioning(dim.Point(DIM_POST/2,DIM_POST/2,0),dim.Point(DIM_POST/2,DIM_ALL_Y+DIM_POST/2,0),plane="-zy",prop=dim_prop_2)
+dim_front_end=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_POST/2,DIM_ALL_Y+DIM_POST/2,0),plane="-zy",prop=dim_prop_2)
 l_objs.append(dim_front_end)
 
-dim_front_heigh=dim.Dimensioning(dim.Point(DIM_POST/2,0,0),dim.Point(DIM_POST/2,0,DIM_ALL_Z),plane="-yz",prop=dim_prop_2)
+dim_front_heigh=pcad.Dimensioning(pcad.Point(DIM_POST/2,0,0),pcad.Point(DIM_POST/2,0,DIM_ALL_Z),plane="-yz",prop=dim_prop_2)
 l_objs.append(dim_front_heigh)
 
-dim_pull_up_heigh=dim.Dimensioning(dim.Point(DIM_POST/2,0,0),dim.Point(DIM_POST/2,0,DIM_PULL_UP_BAR_Z),plane="-yz",prop=dim_prop)
+dim_pull_up_heigh=pcad.Dimensioning(pcad.Point(DIM_POST/2,0,0),pcad.Point(DIM_POST/2,0,DIM_PULL_UP_BAR_Z),plane="-yz",prop=dim_prop)
 l_objs.append(dim_pull_up_heigh)
 
-dim_dip_heigh=dim.Dimensioning(dim.Point(0,post_left_middle.pos.y+DIM_POST/2,0),dim.Point(0,post_left_middle.pos.y+DIM_POST/2,DIM_DIP_Z),plane="-yz",prop=dim_prop_2)
+dim_dip_heigh=pcad.Dimensioning(pcad.Point(0,post_left_middle.pos.y+DIM_POST/2,0),pcad.Point(0,post_left_middle.pos.y+DIM_POST/2,DIM_DIP_Z),plane="-yz",prop=dim_prop_2)
 l_objs.append(dim_dip_heigh)
 
 # right side
@@ -199,7 +198,7 @@ carrier_right.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_A
 carrier_right.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_right)
 
-dim_front_width=dim.Dimensioning(dim.Point(DIM_POST/2,DIM_POST/2,0),dim.Point(DIM_ALL_X-DIM_POST/2,DIM_POST/2,0),plane="-zx",prop=dim_prop)
+dim_front_width=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_ALL_X-DIM_POST/2,DIM_POST/2,0),plane="-zx",prop=dim_prop)
 l_objs.append(dim_front_width)
 
 # middle

@@ -41,7 +41,7 @@ class const:
             bool: True object can be added
                   False object can not be added
         """
-        if isinstance(a_obj, obj) or isinstance(a_obj, dim.Dimensioning):
+        if isinstance(a_obj, obj) or isinstance(a_obj, Dimensioning):
             self.l_obj.append(a_obj)
         else:
             return False
@@ -65,7 +65,7 @@ class const:
         for i_obj in l_obj:
             self.s_out += i_obj.const.proceed(i_obj)
 
-    def show(self):
+    def show(self, ecall = None):
         raise Exception ("Function is virtual")
 
 
