@@ -23,7 +23,7 @@ class scad_const(const):
     def __init__(self, name, *l_obj) -> None:
         super().__init__(name, *l_obj)
         self.s_filename += ".scad"
-        
+
         aobj_const().set_strategy(aobj_const_scad())
         sobj_const().set_strategy(sobj_const_scad())
         dim_const().set_strategy(dim_const_scad())
@@ -34,15 +34,15 @@ class scad_const(const):
         print(test.strategy)
         sphere_const().set_strategy(sphere_const_scad())
 
-    def show(self, s_call="openscad"):
+    def show(self, s_ecall="openscad"):
         self.iterate_obj(self.l_obj)
         f_file = open(self.s_filename, "w")
         f_file.write(self.s_out)
         f_file.close()
         print(f"{self.s_filename} created")
-        s_call = f"{s_call} {self.s_filename}"
+        s_call = f"{s_ecall} {self.s_filename}"
         print (s_call)
-        p = subprocess.Popen([s_call, self.s_filename], stdout = subprocess.PIPE)
+        p = subprocess.Popen([s_ecall, self.s_filename], stdout = subprocess.PIPE)
         print ("scad started")
         #p.wait()
 
