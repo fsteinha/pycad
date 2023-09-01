@@ -2,7 +2,7 @@ import sys
 sys.path.append("../")
 from pcad.pcad_pos import pos, rot
 from pcad.pcad_color import RGBColor
-from pcad.pcad_purch import purch
+from purch.purch import purch
 import gc
 
 

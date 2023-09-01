@@ -3,7 +3,7 @@ sys.path.append("../..")
 
 from pcad.pcad_obj import obj
 from pcad.pcad_pos import pos, rot
-from pcad.pcad_purch import purch
+from purch.purch import purch
 from obj.dimension.obj_dim import Dimensioning
 
 from const import const_obj

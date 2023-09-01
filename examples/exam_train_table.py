@@ -1,11 +1,10 @@
 import sys
-sys.path.append("../pcad")
-sys.path.append("../prog")
+sys.path.append("../")
 import copy
 
-import pcad as pcad
-import pcad_dim as dim
-import prog_parse
+import pcad.pcad as pcad
+import obj.dimension.obj_dim as dim
+import prog.prog_parse as prog_parse
 
 # Table dimensions
 ##############################################################################

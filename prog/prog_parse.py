@@ -3,6 +3,8 @@ import re
 import os
 import sys
 
+# global program dictionary
+##############################################################################
 D_PROG_OPTIONS = {
     "SCAD": {
         "Enable":True,
@@ -10,7 +12,6 @@ D_PROG_OPTIONS = {
     },
     "CQ": False,
 }
-
 
 # Functions
 ##############################################################################
@@ -58,7 +59,7 @@ parser.add_argument("--scad", nargs='?', const="openscad", help="activate scad w
 
 args = parser.parse_args()
 
-# Die Werte der Argumente abrufen und verwenden
+# Get the values
 if args.scad:
     D_PROG_OPTIONS["SCAD"]["Enable"] = True
     if args.scad is True:

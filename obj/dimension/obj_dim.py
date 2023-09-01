@@ -81,6 +81,8 @@ class Dimensioning:
         self.text = text
         self.prop = prop
         self.const = dim_const()
+        # dummy for interation in purch list
+        self.purch = None
         self.draw()
 
     def calculate_length(self, start_point:Point, end_point:Point):

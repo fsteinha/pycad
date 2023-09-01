@@ -4,8 +4,6 @@
 import sys
 sys.path.append("../")
 
-import pcad.pcad_obj_iterate as pcad_obj_iterate
-
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
@@ -94,7 +92,8 @@ class purch_report:
         self.l_obj= l_obj
         self.d_purch = {self.STR_PRICE_LIST:{}, self.STR_PRICE_SUMMARY:0.0}
 
-        pcad_obj_iterate.obj_iterate(self.l_obj, self)
+        for i_obj in l_obj:
+            self.obj_get_price(i_obj)
         self.make_report_text()
         pass
 
@@ -109,7 +108,6 @@ class purch_report:
         f_sum = self.d_purch[self.STR_PRICE_SUMMARY]
         print (f"Summary: {f_sum}")
         pass
-
 
     def obj_get_price(self, i_obj):
         purch = i_obj.purch
@@ -128,7 +126,8 @@ class purch_report:
                  self.STR_PRICE_UNIT: i_obj.purch.price,
                  self.STR_SOURCE: i_obj.purch.link}
         elif purch == None:
-            self.d_purch[self.STR_PRICE_LIST][i_obj.name] = {self.STR_PRICE: None, self.STR_PRICE_UNIT: None}
+            #self.d_purch[self.STR_PRICE_LIST][i_obj.name] = {self.STR_PRICE: None, self.STR_PRICE_UNIT: None, self.STR_SOURCE:None}
+            pass
         else:
             raise Exception ("Unknown constallation")
 
