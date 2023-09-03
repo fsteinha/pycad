@@ -150,7 +150,7 @@ carrier_left.add(pcad.cube(DIM_POST, DIM_ALL_Y + 3*DIM_POST, DIM_POST))
 carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_POST,0)))
 carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
 carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_ALL_Y+ DIM_POST, 0)))
-carrier_left.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
+#carrier_left.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
@@ -170,6 +170,8 @@ dim_pull_up_heigh=pcad.Dimensioning(pcad.Point(DIM_POST/2,0,0),pcad.Point(DIM_PO
 l_objs.append(dim_pull_up_heigh)
 
 dim_dip_heigh=pcad.Dimensioning(pcad.Point(0,post_left_middle.pos.y+DIM_POST/2,0),pcad.Point(0,post_left_middle.pos.y+DIM_POST/2,DIM_DIP_Z),plane="-yz",prop=dim_prop_2)
+l_objs.append(dim_dip_heigh)
+
 l_objs.append(dim_dip_heigh)
 
 # right side
@@ -194,7 +196,7 @@ carrier_right.add(pcad.cube(DIM_POST, DIM_ALL_Y + 3*DIM_POST, DIM_POST))
 carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_POST,0)))
 carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
 carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y+ DIM_POST, 0)))
-carrier_right.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
+#carrier_right.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
 carrier_right.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_right)
 
@@ -202,11 +204,12 @@ dim_front_width=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point
 l_objs.append(dim_front_width)
 
 # middle
-carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
-carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
-carrier_middle.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(DIM_POST, 0, 0)))
-carrier_middle.set_color(pcad.RGBColor.RED)
-l_objs.append(carrier_middle)
+##############################################################################
+# carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
+# carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
+# carrier_middle.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(DIM_POST, 0, 0)))
+# carrier_middle.set_color(pcad.RGBColor.RED)
+# l_objs.append(carrier_middle)
 
 pull_up_bar = copy.copy(tpl_barpullup)
 pull_up_bar.name = "pull_up_bar"
@@ -222,6 +225,9 @@ dip_bar_end = copy.copy(tpl_bardip)
 dip_bar_end.name = "dip_bar_end"
 dip_bar_end.pos = pcad.pos(0, DIM_ALL_Y + DIM_POST/2, DIM_DIP_Z)
 l_objs.append(dip_bar_end)
+
+dim_travers_heigh_1=pcad.Dimensioning(pcad.Point(0,post_left_end.pos.y,0),pcad.Point(0,post_left_end.pos.y,DIM_ALL_CARRIER_Z),plane="-yz",prop=dim_prop)
+l_objs.append(dim_travers_heigh_1)
 
 # Execute
 ##############################################################################

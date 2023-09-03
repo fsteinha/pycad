@@ -1,19 +1,27 @@
-from pcad_primitives import *
-from pcad_obj import *
-from pcad_pos import pos, rot
-from pcad_purch import purch
+import sys
 
-class traverse_angle(pobj):
+sys.path.append("../../")
+
+
+from pcad import *
+from pcad.pcad_obj import pcad_obj, pcad_pos
+
+from const import const_obj
+
+class cube_angle_const(const_obj.const_obj_base):
+    pass
+
+class cube_angle():
     def __init__(self,
                  dx:float=10.0,
                  dy:float=10.0,
                  da:float=100.0,
                  db:float=100.0,
                  name: str = None,
-                 pos: pos = pos(),
-                 rot: rot = rot(),
+                 pos:pcad_pos = pcad_pos.pos(),
+                 rot:pcad_rot = pcad_pos.rot(),
                  info: str = "",
-                 purch: purch = None) -> None:
+                 purch:purch = None) -> None:
         """sobj for a travese whik is angled at the ends
               ____                     |\
              |\   \                  ––| \
