@@ -3,6 +3,20 @@ import re
 import os
 import sys
 
+sys.path.append("../")
+from pcad_types.singleton import singleton
+
+class prog_parse(metaclass=singleton):
+    def __init__(self) -> None:
+        self.parser = argparse.ArgumentParser(description='Process some integers.')
+        # scad parameter
+        self.parser.add_argument("--scad", nargs='?', const="openscad", help="activate scad with option program path")
+        pass
+    
+    def parse_args(self): 
+        return self.parser.parse_args()
+
+
 # global program dictionary
 ##############################################################################
 D_PROG_OPTIONS = {
@@ -53,10 +67,7 @@ def exam_execute(objs:list, purch = False, file_name:str=sys.argv[0]):
 
 # parse arguments
 ##############################################################################
-parser = argparse.ArgumentParser(description='Process some integers.')
-# scad parameter
-parser.add_argument("--scad", nargs='?', const="openscad", help="activate scad with option program path")
-
+parser = prog_parse()
 args = parser.parse_args()
 
 # Get the values
