@@ -31,7 +31,6 @@ class scad_const(const):
         cylinder_c = cylinder_const()
         cylinder_c.set_strategy(cylinder_const_scad())
         test = cylinder_const()
-        print(test.strategy)
         sphere_const().set_strategy(sphere_const_scad())
 
     def show(self, s_ecall="openscad"):
