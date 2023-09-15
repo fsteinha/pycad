@@ -12,15 +12,17 @@ parser = prog_parse.prog_parse()
 parser.add_argument("--dx", default=100, type=int, help="x dimension base cube")
 parser.add_argument("--dy", default=100, type=int, help="y dimension base cube")
 parser.add_argument("--dz", default=10, type=int, help="z dimension base cube")
-parser.add_argument("--ax0", default=0, type=int, help="left angle for miter in xz layer")
-parser.add_argument("--ax1", default=0, type=int, help="right angle for miter in xz layer")
-parser.add_argument("--ay0", default=45, type=int, help="left angle for miter in yz layer")
+parser.add_argument("--ax0", default=-45, type=int, help="left angle for miter in xz layer")
+parser.add_argument("--ax1", default=-45, type=int, help="right angle for miter in xz layer")
+parser.add_argument("--ay0", default=-45, type=int, help="left angle for miter in yz layer")
 parser.add_argument("--ay1", default=-45, type=int, help="right angle for miter in yz layer")
 
 args = parser.parse_args()
 
 cube_angle = mac_cube_angle_ab(args.dx,args.dy,args.dz,args.ax0,args.ax1, args.ay0, args.ay1)
 
-prog_parse.exam_execute([cube_angle])
+cube_angle2 = mac_cube_angle_ab(args.dx,args.dy,args.dz,-args.ax0,-args.ax1, -args.ay0, -args.ay1, pos(0,0, args.dz*2))
 
-    
+print (f"{cube_angle} {cube_angle2}")
+prog_parse.exam_execute([cube_angle, cube_angle2])
+
