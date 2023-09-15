@@ -15,17 +15,13 @@ class prog_parse(metaclass=singleton):
     
     def parse_args(self): 
         return self.parser.parse_args()
+    
+    def add_argument(self, *args, **kwargs):
+        return self.parser.add_argument(*args, **kwargs)
 
 
 # global program dictionary
 ##############################################################################
-D_PROG_OPTIONS = {
-    "SCAD": {
-        "Enable":True,
-        "PATH": "openscad",
-    },
-    "CQ": False,
-}
 
 # Functions
 ##############################################################################
@@ -51,30 +47,39 @@ def exam_execute(objs:list, purch = False, file_name:str=sys.argv[0]):
     Raises:
         Exception: output is not clear
     """
+    args = parser.parse_args()
+
+    d_prog_opt = {
+        "SCAD": {
+            "Enable":True,
+            "PATH": "openscad",
+        },
+        "CQ": False,
+    }
+
+    # Get the values
+    if args.scad:
+        d_prog_opt["SCAD"]["Enable"] = True
+        if args.scad is True:
+            d_prog_opt["SCAD"]["PATH"] = "openscad"
+        else:
+            d_prog_opt["SCAD"]["PATH"] = args.scad.replace("/","\\")
+
     if file_name == None:
         file_name = get_const_name(__file__)
-    if D_PROG_OPTIONS["SCAD"]["Enable"] ==True:
+    if d_prog_opt["SCAD"]["Enable"] ==True:
         sys.path.append("../")
         import const.scad.const_scad as const_scad
         scad = const_scad.scad_const(file_name, objs)
-        scad.show(D_PROG_OPTIONS["SCAD"]["PATH"])
-    elif D_PROG_OPTIONS["CQ"]["Enable"]==True:
+        scad.show(d_prog_opt["SCAD"]["PATH"])
+    elif d_prog_opt["CQ"]["Enable"]==True:
         import const_cadquery
         constcq = const_cadquery.cq_const(file_name, objs)
-        constcq.show(D_PROG_OPTIONS["CQ"]["PATH"])
+        constcq.show(d_prog_opt["CQ"]["PATH"])
     else:
         raise Exception ("Unknown option")
 
 # parse arguments
 ##############################################################################
 parser = prog_parse()
-args = parser.parse_args()
-
-# Get the values
-if args.scad:
-    D_PROG_OPTIONS["SCAD"]["Enable"] = True
-    if args.scad is True:
-        D_PROG_OPTIONS["SCAD"]["PATH"] = "openscad"
-    else:
-        D_PROG_OPTIONS["SCAD"]["PATH"] = args.scad.replace("/","\\")
         

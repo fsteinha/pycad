@@ -65,14 +65,13 @@ def mac_cube_angle_ab( dx:float=10.0,
           dlx0 = alx0*math.cos(math.radians(abs(ax0)))
           dlx02 = dlx0*math.cos(math.radians(abs(ax0)))
           dlz02 = dlx0*math.sin(math.radians(abs(ax0)))
-          print (dlz02)
 
           if (ax0 < 0):        
-            cube_ang0 = cube(dlx0, dy, dlz0, rot=rot(0,ax0,0), pos=pos(alx0-dlx02,0,-dlz02))
-            cube_angle.add(cube_ang0)
+            cube_angx0 = cube(dlx0, dy, dlz0, rot=rot(0,ax0,0), pos=pos(alx0-dlx02,0,-dlz02))
+            cube_angle.add(cube_angx0)
           elif (ax0 > 0):
-            cube_ang0 = cube(dlx0, dy, dlz0, rot=rot(0,90-ax0,0), pos=pos(-(alx0-dlx02),0,dlz02))
-            cube_angle.add(cube_ang0)
+            cube_angx0 = cube(dlx0, dy, dlz0, rot=rot(0,ax0,0), pos=pos(-dlx02,0,dlz02))
+            cube_angle.add(cube_angx0)
             
         # proceed right side in xz layer
         #########################################################################
@@ -80,15 +79,46 @@ def mac_cube_angle_ab( dx:float=10.0,
           alx1 = math.tan(math.radians(abs(ax1))) * dz
           dlz1 = math.sqrt(alx1**2 + dz**2)
           dlx1 = alx1*math.cos(math.radians(abs(ax1)))
-          dlx12 = dlx0*math.cos(math.radians(abs(ax1)))
-          dlz12 = dlx0*math.sin(math.radians(abs(ax1)))
+          dlx12 = dlx1*math.cos(math.radians(abs(ax1)))
+          dlz12 = dlx1*math.sin(math.radians(abs(ax1)))
+
           if (ax1 < 0):        
-            #cube_ang1 = cube(dlx1, dy, dlz1, rot=rot(0,ax1,0), pos=pos(dx + (alx1-dlx12),0,dlz12))
-            cube_ang1 = cube(dlx1, dy, dlz1, rot=rot(0,ax1,0), pos=pos(dx ,0,0))
-            cube_angle.add(cube_ang1)
+            cube_angx1 = cube(dlx1, dy, dlz1, rot=rot(0,ax1,0), pos=pos(dx ,0,0))
+            cube_angle.add(cube_angx1)
           elif (ax1 > 0):
-            cube_ang1 = cube(dlx1, dy, dlz1, rot=rot(0,ax1,0), pos=pos(dx-(alx1),0,0))
-            cube_angle.add(cube_ang1)
+            cube_angx1 = cube(dlx1, dy, dlz1, rot=rot(0,ax1,0), pos=pos(dx-(alx1),0,0))
+            cube_angle.add(cube_angx1)
+
+        # proceed left side in yz layer
+        #########################################################################
+        if ay0 != 0:
+          aly0 = math.tan(math.radians(abs(ay0))) * dz
+          dlz0 = math.sqrt(aly0**2 + dz**2)
+          dly0 = aly0*math.cos(math.radians(abs(ay0)))
+          dly02 = dly0*math.cos(math.radians(abs(ay0)))
+          dlz02 = dly0*math.sin(math.radians(abs(ay0)))
+
+          if (ay0 < 0):        
+            cube_angy0 = cube(dx,dly0, dlz0, rot=rot(ay0,0,0), pos=pos(0,-dly02,dlz02))
+            cube_angle.add(cube_angy0)
+          elif (ay0 > 0):
+            cube_angy0 = cube(dx,dly0, dlz0, rot=rot(-ay0,00), pos=pos(0,-(aly0+dly02),dlz02))
+            cube_angle.add(cube_angy0)
           
+        # proceed right side in yz layer
+        #########################################################################
+        if ay1 != 0:
+          aly1 = math.tan(math.radians(abs(ay1))) * dz
+          dlz1 = math.sqrt(aly1**2 + dz**2)
+          dly1 = aly1*math.cos(math.radians(abs(ay1)))
+          dly12 = dly1*math.cos(math.radians(abs(ay1)))
+          dlz12 = dly1*math.sin(math.radians(abs(ay1)))
+
+          if (ay1 < 0):        
+            cube_angy1 = cube(dx,dly1, dlz1, rot=rot(ay1,0,0), pos=pos(0,-dly12,dlz12))
+            cube_angle.add(cube_angy1)
+          elif (ay1 > 0):
+            cube_angy1 = cube(dx,dly1, dlz1, rot=rot(ay1,0, 0), pos=pos(0,-(aly1+dly12),dlz12))
+            cube_angle.add(cube_angy1)
         
         return cube_angle
