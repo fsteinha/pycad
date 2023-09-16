@@ -1,9 +1,9 @@
 import sys
-sys.path.append("../src")
+sys.path.append("../")
 
-import pcad as pcad
-import const_scad as const
-import dimensioning as dim
+import pcad.pcad as pcad
+import obj.dimension.obj_dim as dim
+import prog.prog_parse as prog_parse
 
 
 thickness = 6;
@@ -17,7 +17,7 @@ front_y = thickness;
 front_z = 115;
 front_z_offset = -15;
 
-drawer = pcad.cobj("drawer")
+drawer = pcad.aobj("drawer")
 drawer.add(pcad.cube(drawer_x - 2* thickness, thickness, drawer_z,
                        "backside", pcad.pos(thickness, 0,0)))
 drawer.add(pcad.cube(drawer_x - 2* thickness, thickness, drawer_z,
@@ -37,6 +37,4 @@ drawer.add(dim.Dimensioning(dim.Point(0,drawer_y,0),dim.Point(0,0,0),plane="-xy"
 
 drawer.add(dim.Dimensioning(dim.Point(-1*((front_x-drawer_x)/2),drawer_y + thickness,0),dim.Point(-1*((front_x-drawer_x)/2) + front_x,drawer_y + thickness,0),plane="yx"))
 
-
-scad = const.scad("test", drawer)
-scad.show()
+prog_parse.exam_execute([drawer])

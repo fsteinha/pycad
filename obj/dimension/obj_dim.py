@@ -1,4 +1,13 @@
+import sys
+import sys
+sys.path.append("../..")
+from const import const_obj
+
 import math
+
+class dim_const(const_obj.const_obj_base):
+    pass
+
 
 class Point:
     x = None
@@ -10,19 +19,18 @@ class Point:
         self.y = y
         self.z = z
 
-
     def __add__(self, other):
         x = self.x + other.x
         y = self.y + other.y
         z = self.z + other.z
         return Point(x, y, z)
 
-
     def __sub__(self, other):
         x = self.x - other.x
         y = self.y - other.y
         z = self.z - other.z
         return Point(x, y, z)
+
 class Line:
     def __init__(self, start_point, end_point):
         self.start_point = start_point
@@ -37,13 +45,30 @@ class Line:
         x1, y1, z1 = self.start_point.x, self.start_point.y, self.start_point.z
         x2, y2, z2 = self.end_point.x, self.end_point.y, self.end_point.z
         return Point((x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2)
-class Dimensioning:
-    AUX_LINE_LENGHT = 10
-    LINE_OFFSET = 2
-    TEXT_OFFSET = 2
-    TEXT_SIZE = 1
 
-    def __init__(self, start_point:Point, end_point:Point, length=None, plane="xy", name = None, text = None) -> None:
+class Dimensioning_Prop:
+    def __init__(self, aux_line_lenght=10,
+                 line_offset=2,
+                 text_offset=2,
+                 text_size =1,
+                 line_thickness = 0.1) -> None:
+        self.aux_line_lenght=aux_line_lenght
+        self.line_offset=line_offset
+        self.text_offset=text_offset
+        self.text_size=text_size
+        self.line_thickness=line_thickness
+        pass
+
+
+class Dimensioning:
+
+    def __init__(self, start_point:Point,
+                 end_point:Point,
+                 length=None,
+                 plane="xy",
+                 name = None,
+                 text = None,
+                 prop=Dimensioning_Prop()) -> None:
         self.start_point = start_point
         self.end_point = end_point
         self.length = length
@@ -54,6 +79,10 @@ class Dimensioning:
         self.name = name
         self.textpoint = None
         self.text = text
+        self.prop = prop
+        self.const = dim_const()
+        # dummy for interation in purch list
+        self.purch = None
         self.draw()
 
     def calculate_length(self, start_point:Point, end_point:Point):
@@ -131,8 +160,8 @@ class Dimensioning:
 
 
     def draw_yx(self):
-        as_ep_y = self.start_point.y + self.AUX_LINE_LENGHT
-        ae_ep_y = self.end_point.y + self.AUX_LINE_LENGHT
+        as_ep_y = self.start_point.y + self.prop.aux_line_lenght
+        ae_ep_y = self.end_point.y + self.prop.aux_line_lenght
 
         as_ep_y, ae_ep_y = self.level_max(as_ep_y, ae_ep_y)
 
@@ -147,16 +176,16 @@ class Dimensioning:
         self.aux_line_start = Line(self.start_point, as_ep)
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(0,self.LINE_OFFSET,0),
-                                   ae_ep - Point(0,self.LINE_OFFSET,0))
+        self.line           = Line(as_ep - Point(0,self.prop.line_offset,0),
+                                   ae_ep - Point(0,self.prop.line_offset,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,self.TEXT_OFFSET,0)
+        self.textpoint = self.line.midpoint() + Point(0,self.prop.text_offset,0)
         pass
 
     def draw_nyx(self):
-        as_ep_y = self.start_point.y - self.AUX_LINE_LENGHT
-        ae_ep_y = self.end_point.y - self.AUX_LINE_LENGHT
+        as_ep_y = self.start_point.y - self.prop.aux_line_lenght
+        ae_ep_y = self.end_point.y - self.prop.aux_line_lenght
 
         as_ep_y, ae_ep_y = self.level_min(as_ep_y, ae_ep_y)
 
@@ -171,16 +200,16 @@ class Dimensioning:
         self.aux_line_start = Line(self.start_point, as_ep)
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(0,self.LINE_OFFSET,0),
-                                   ae_ep + Point(0,self.LINE_OFFSET,0))
+        self.line           = Line(as_ep + Point(0,self.prop.line_offset,0),
+                                   ae_ep + Point(0,self.prop.line_offset,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() - Point(0,self.TEXT_OFFSET,0)
+        self.textpoint = self.line.midpoint() - Point(0,self.prop.text_offset,0)
         pass
 
     def draw_xy(self):
-        as_ep_x = self.start_point.x + self.AUX_LINE_LENGHT
-        ae_ep_x = self.end_point.x + self.AUX_LINE_LENGHT
+        as_ep_x = self.start_point.x + self.prop.aux_line_lenght
+        ae_ep_x = self.end_point.x + self.prop.aux_line_lenght
 
         as_ep_x, ae_ep_x = self.level_max(as_ep_x, ae_ep_x)
 
@@ -197,16 +226,16 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(self.LINE_OFFSET,0,0),
-                                   ae_ep - Point(self.LINE_OFFSET,0,0))
+        self.line           = Line(as_ep - Point(self.prop.line_offset,0,0),
+                                   ae_ep - Point(self.prop.line_offset,0,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(self.TEXT_OFFSET,0,0)
+        self.textpoint = self.line.midpoint() + Point(self.prop.text_offset,0,0)
         pass
 
     def draw_nxy(self):
-        as_ep_x = self.start_point.x - self.AUX_LINE_LENGHT
-        ae_ep_x = self.end_point.x - self.AUX_LINE_LENGHT
+        as_ep_x = self.start_point.x - self.prop.aux_line_lenght
+        ae_ep_x = self.end_point.x - self.prop.aux_line_lenght
 
         as_ep_x, ae_ep_x = self.level_min(as_ep_x, ae_ep_x)
 
@@ -223,16 +252,16 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(self.LINE_OFFSET,0,0),
-                                   ae_ep + Point(self.LINE_OFFSET,0,0))
+        self.line           = Line(as_ep + Point(self.prop.line_offset,0,0),
+                                   ae_ep + Point(self.prop.line_offset,0,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() - Point(self.TEXT_OFFSET,0,0)
+        self.textpoint = self.line.midpoint() - Point(self.prop.text_offset,0,0)
         pass
 
     def draw_xz(self):
-        as_ep_x = self.start_point.x + self.AUX_LINE_LENGHT
-        ae_ep_x = self.end_point.x + self.AUX_LINE_LENGHT
+        as_ep_x = self.start_point.x + self.prop.aux_line_lenght
+        ae_ep_x = self.end_point.x + self.prop.aux_line_lenght
 
         as_ep_x, ae_ep_x = self.level_max(as_ep_x, ae_ep_x)
 
@@ -247,16 +276,16 @@ class Dimensioning:
         self.aux_line_start = Line(self.start_point, as_ep)
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(self.LINE_OFFSET,0,0),
-                                   ae_ep - Point(self.LINE_OFFSET,0,0))
+        self.line           = Line(as_ep - Point(self.prop.line_offset,0,0),
+                                   ae_ep - Point(self.prop.line_offset,0,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(self.TEXT_OFFSET,0,0)
+        self.textpoint = self.line.midpoint() + Point(self.prop.text_offset,0,0)
         pass
 
     def draw_nxz(self):
-        as_ep_x = self.start_point.x - self.AUX_LINE_LENGHT
-        ae_ep_x = self.end_point.x - self.AUX_LINE_LENGHT
+        as_ep_x = self.start_point.x - self.prop.aux_line_lenght
+        ae_ep_x = self.end_point.x - self.prop.aux_line_lenght
 
         as_ep_x, ae_ep_x = self.level_min(as_ep_x, ae_ep_x)
 
@@ -271,16 +300,16 @@ class Dimensioning:
         self.aux_line_start = Line(self.start_point, as_ep)
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(self.LINE_OFFSET,0,0),
-                                   ae_ep + Point(self.LINE_OFFSET,0,0))
+        self.line           = Line(as_ep + Point(self.prop.line_offset,0,0),
+                                   ae_ep + Point(self.prop.line_offset,0,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() - Point(self.TEXT_OFFSET,0,0)
+        self.textpoint = self.line.midpoint() - Point(self.prop.text_offset,0,0)
         pass
 
     def draw_zx(self):
-        as_ep_z = self.start_point.z + self.AUX_LINE_LENGHT
-        ae_ep_z = self.end_point.z + self.AUX_LINE_LENGHT
+        as_ep_z = self.start_point.z + self.prop.aux_line_lenght
+        ae_ep_z = self.end_point.z + self.prop.aux_line_lenght
 
         as_ep_z, ae_ep_z = self.level_max(as_ep_z, ae_ep_z)
 
@@ -296,16 +325,16 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(0,0,self.LINE_OFFSET),
-                                   ae_ep - Point(0,0,self.LINE_OFFSET))
+        self.line           = Line(as_ep - Point(0,0,self.prop.line_offset),
+                                   ae_ep - Point(0,0,self.prop.line_offset))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.prop.text_offset)
         pass
 
     def draw_nzx(self):
-        as_ep_z = self.start_point.z - self.AUX_LINE_LENGHT
-        ae_ep_z = self.end_point.z - self.AUX_LINE_LENGHT
+        as_ep_z = self.start_point.z - self.prop.aux_line_lenght
+        ae_ep_z = self.end_point.z - self.prop.aux_line_lenght
 
         as_ep_z, ae_ep_z = self.level_min(as_ep_z, ae_ep_z)
 
@@ -321,16 +350,16 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(0,0,self.LINE_OFFSET),
-                                   ae_ep + Point(0,0,self.LINE_OFFSET))
+        self.line           = Line(as_ep + Point(0,0,self.prop.line_offset),
+                                   ae_ep + Point(0,0,self.prop.line_offset))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.prop.text_offset)
         pass
 
     def draw_zy(self):
-        as_ep_z = self.start_point.z + self.AUX_LINE_LENGHT
-        ae_ep_z = self.end_point.z + self.AUX_LINE_LENGHT
+        as_ep_z = self.start_point.z + self.prop.aux_line_lenght
+        ae_ep_z = self.end_point.z + self.prop.aux_line_lenght
 
         as_ep_z, ae_ep_z = self.level_max(as_ep_z, ae_ep_z)
 
@@ -346,17 +375,17 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(0,0,self.LINE_OFFSET),
-                                   ae_ep - Point(0,0,self.LINE_OFFSET))
+        self.line           = Line(as_ep - Point(0,0,self.prop.line_offset),
+                                   ae_ep - Point(0,0,self.prop.line_offset))
 
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.prop.text_offset)
         pass
 
     def draw_nzy(self):
-        as_ep_z = self.start_point.z - self.AUX_LINE_LENGHT
-        ae_ep_z = self.end_point.z - self.AUX_LINE_LENGHT
+        as_ep_z = self.start_point.z - self.prop.aux_line_lenght
+        ae_ep_z = self.end_point.z - self.prop.aux_line_lenght
 
         as_ep_z, ae_ep_z = self.level_min(as_ep_z, ae_ep_z)
 
@@ -372,17 +401,17 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(0,0,self.LINE_OFFSET),
-                                   ae_ep + Point(0,0,self.LINE_OFFSET))
+        self.line           = Line(as_ep + Point(0,0,self.prop.line_offset),
+                                   ae_ep + Point(0,0,self.prop.line_offset))
 
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,0,self.TEXT_OFFSET)
+        self.textpoint = self.line.midpoint() + Point(0,0,self.prop.text_offset)
         pass
 
     def draw_yz(self):
-        as_ep_y = self.start_point.y + self.AUX_LINE_LENGHT
-        ae_ep_y = self.end_point.y + self.AUX_LINE_LENGHT
+        as_ep_y = self.start_point.y + self.prop.aux_line_lenght
+        ae_ep_y = self.end_point.y + self.prop.aux_line_lenght
 
         as_ep_y, ae_ep_y = self.level_max(as_ep_y, ae_ep_y)
 
@@ -398,16 +427,16 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep - Point(0,self.LINE_OFFSET,0),
-                                   ae_ep - Point(0,self.LINE_OFFSET,0))
+        self.line           = Line(as_ep - Point(0,self.prop.line_offset,0),
+                                   ae_ep - Point(0,self.prop.line_offset,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() + Point(0,self.TEXT_OFFSET,0)
+        self.textpoint = self.line.midpoint() + Point(0,self.prop.text_offset,0)
         pass
 
     def draw_nyz(self):
-        as_ep_y = self.start_point.y - self.AUX_LINE_LENGHT
-        ae_ep_y = self.end_point.y - self.AUX_LINE_LENGHT
+        as_ep_y = self.start_point.y - self.prop.aux_line_lenght
+        ae_ep_y = self.end_point.y - self.prop.aux_line_lenght
 
         as_ep_y, ae_ep_y = self.level_min(as_ep_y, ae_ep_y)
 
@@ -423,9 +452,9 @@ class Dimensioning:
 
         self.aux_line_end   = Line(self.end_point, ae_ep)
 
-        self.line           = Line(as_ep + Point(0,self.LINE_OFFSET,0),
-                                   ae_ep + Point(0,self.LINE_OFFSET,0))
+        self.line           = Line(as_ep + Point(0,self.prop.line_offset,0),
+                                   ae_ep + Point(0,self.prop.line_offset,0))
 
         self.length = self.calculate_length(as_ep, ae_ep)
-        self.textpoint = self.line.midpoint() -  Point(0,self.TEXT_OFFSET,0)
+        self.textpoint = self.line.midpoint() -  Point(0,self.prop.text_offset,0)
         pass
