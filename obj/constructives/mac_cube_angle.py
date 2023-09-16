@@ -16,7 +16,7 @@ def mac_cube_angle_ab( dx:float=10.0,
                        ay1:float=0,
                        a_pos:pos = pos(),
                        a_rot:rot = rot(),
-                       name:str = "cube_angle_",
+                       name:str = None,
                        info: str = "",
                        purch:purch = None) -> None:
         """sobj for a travese whik is angled at the ends
