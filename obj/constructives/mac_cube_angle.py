@@ -7,18 +7,18 @@ from pcad.pcad import *
 import math as math
 
 
-def mac_cube_angle_ab( dx:float=10.0,
-                       dy:float=10.0,
-                       dz:float=10.0,
-                       ax0:float=0,
-                       ax1:float=0,
-                       ay0:float=0,
-                       ay1:float=0,
-                       a_pos:pos = pos(),
-                       a_rot:rot = rot(),
-                       name:str = None,
-                       info: str = "",
-                       purch:purch = None) -> None:
+def mac_cube_angle( dx:float=10.0,
+                    dy:float=10.0,
+                    dz:float=10.0,
+                    ax0:float=0,
+                    ax1:float=0,
+                    ay0:float=0,
+                    ay1:float=0,
+                    a_pos:pos = pos(),
+                    a_rot:rot = rot(),
+                    name:str = None,
+                    info: str = "",
+                    purch:purch = None) -> None:
         """sobj for a travese whik is angled at the ends
 
           z ^                                                         z ^
@@ -43,17 +43,56 @@ def mac_cube_angle_ab( dx:float=10.0,
             |/                                                /
             +------------------------------------->         x/
                                                   x
-                                Args:
-            dx (float, optional): x dimension cube. Defaults to 10.0.
-            dz (float, optional): z dimension cube. Defaults to 10.0.
-            da (float, optional): a length traverse angle. Defaults to 100.0.
-            db (float, optional): b lengrh traverse angle. Defaults to 100.0.
-            name (str, optional): name of construnction part. Defaults to None.
-            pos (pos, optional):  postion in construction space. Defaults to pos().
-            rot (rot, optional):  rotation. Defaults to rot().
-            info (str, optional): additonal information. Defaults to "".
-            purch (purch, optional): purchchase informaton. Defaults to None.
-        """
+
+          z ^                                                         z ^
+            |                                                           |
+            |                 /                                         |
+            |               y/                                          |           :ay0:    :ay1:
+            |               /                                           |           :   :____:   :
+            |              /                                            |           :  /|    |\  :
+            |             /                                             |           : / |    | \ :
+            |            /                                              |           :/  |    |  \:........
+            |           /                                               |           /   |    |   |      :  y
+            |         :/ax0:             : ax1 :                        +---------- |   |    |   |------:-->
+            |         :    :  ___________:__   :                       /            |   |    |   |      :
+            |        /:    : /           : /\  :                      /             |   |    |   |      :
+            |       / :    :/____________:/..\.:........             /              |   |____|.......   : dx
+            |      /  :    /              \   \:      :             /               |   /    \   | :    :
+            |     /   :   /                \   :      : dz         /                |  /      \  | :    :
+            |    /    :  /                  \  :\...  :           /                 | /        \ | : dz :
+            |   /     : /                    \ :/ dy  :          /                  |/          \| :    :
+            |  /      :/______________________\:......:.        /                   /____________\.........
+            | /                    dx          :-:             /                          dy
+            |/                                                /
+            +------------------------------------->         x/
+                                                  x
+
+
+    Create an object (sobj) for a traverse that is angled at the ends.
+
+    Parameters:
+    - dx: Length along the x-axis.
+    - dy: Length along the y-axis.
+    - dz: Length along the z-axis.
+    - ax0: Angle at the start along the x-axis (degrees). The sign determines the positon of the angle (bottom (negative), top (positive))
+    - ax1: Angle at the end along the x-axis (degrees).
+    - ay0: Angle at the start along the y-axis (degrees).
+    - ay1: Angle at the end along the y-axis (degrees).
+    - a_pos: Position of the object.
+    - a_rot: Rotation of the object.
+    - name: Name of the object (optional).
+    - info: Additional information (optional).
+    - purch: Purchase information (optional).
+
+    Returns:
+    - None
+
+    Note:
+    This function creates a 3D object with the specified dimensions and angles,
+    resembling a traverse that is angled at the ends. The object is positioned
+    and rotated as specified and can have additional information and purchase
+    details associated with it.
+    """
         cube_angle = sobj(name=name, pos=a_pos, rot=a_rot,info=info, purch=purch)
         cube_angle.add(cube(dx,dy,dz))
 
