@@ -5,7 +5,7 @@ from pcad.pcad import *
 import math as math
 
 
-def mac_angle_ab(dx:float=10.0,
+def mac_cube_traverse(dx:float=10.0,
                  dy:float=10.0,
                  dz:float=10.0,
                  ax:float=10.0,
@@ -58,11 +58,15 @@ def mac_angle_ab(dx:float=10.0,
     """
 
     cube_traverse = sobj(name=name, pos=a_pos, rot=a_rot,info=info, purch=purch)
-    cube_base = cube(dx,dy,dz)
-    cube_traverse.add(cube_base)
 
     if (ax != 0) and (ay != 0):
-        angle = math.tan(ax/ay)
+        tan_angle = ax/ay
+        angle = math.atan2(tan_angle)
+        print (angle)
+    
+        cube_base = cube(dx,dy,dz)
+        cube_traverse.add(cube_base)
+    
         cube_base.rot = rot(0,angle,0)
 
 
