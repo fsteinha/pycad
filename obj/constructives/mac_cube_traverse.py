@@ -2,78 +2,213 @@ import sys
 sys.path.append("../../")
 
 from pcad.pcad import *
+from obj.constructives.mac_cube_angle import *
 import math as math
 
+CUT_VERTICAL   = 0
+CUT_HORIZONTAL = 1
 
-def mac_cube_traverse(dx:float=10.0,
-                 dy:float=10.0,
-                 dz:float=10.0,
-                 ax:float=10.0,
-                 bx:float=10.0,
-                 ay:float=10.0,
-                 by:float=10.0,
-                 a_pos:pos = pos(),
-                 a_rot:rot = rot(),
-                 name:str = None,
-                 info: str = "",
-                 purch:purch = None) -> None:
+
+def mac_cube_traverse_xz(dy:float=10.0,
+                         dz:float=10.0,
+                         a:float=10.0,
+                         b:float=10.0,
+                         c:float=0,
+                         cut = CUT_VERTICAL,
+                         a_pos:pos = pos(),
+                         a_rot:rot = rot(),
+                         name:str = None,
+                         info: str = "",
+                         purch:purch = None) -> None:
     """
 
-          z ^                                                         z ^
-            |                 y/  .                                     |              .
-            |                 /  .                                      |             .
-            |                / /\ .                                     |           /\ .
-            |               / /  \ .                                    |          /  \ .
-            |              / |\   \ .                                   |         |\   \ .
-            |             /  | \   \ . dx                               |         | \   \ . dy
-            |            / ..|  \   \ .                                 |         |  \   \ .
-            |           /    \   \   \ .                                |     ....\   \   \ .                y
-            |          /     :\   \   \ .                               +------:---\   \   \-.---------------->
-            |         /      : \   \   \ . .                           /       :    \   \   \ . .
-            |        /    ax :  \   \   \ ....                        /        :     \   \   \ ....
-            |       /        :   \   \  /|                           /       ay:      \   \  /|
-            |      /         :    \   \/ |  dz                      /          :       \   \/ |  dz
-            |     /          :     \  |  |....                     /           :        \  |  |....
-            |    /           :      \ | / .                       /            :         \ | /.
-            |   /          ..........\|/ . .                     /            .............|/.  .
-            |  /             :   bx   : . dy                    /              :    by     :.  dx
-            | /                          .                     /                             .
-            |/                                                /
-            +------------------------------------->         x/
+          z ^                                             
+            |                 y/  .                       
+            |                 /  .                        
+            |                /      /\ .                       
+            |               /   .. /  \ .                      
+            |              /    : |\   \ .                     
+            |             /     : | \   \ .                  
+            |            /      : |  \   \ .                   
+            |           /       : \   \   \ .                  
+            |          /        :  \   \   \ .                 
+            |         /         :   \   \   \ . .              
+            |        /        a :    \   \   \ ....            
+            |       /           :     \   \  /|                
+            |      /            :      \   \/ |  dz            
+            |     /             :       \  |  |....            
+            |    /              :        \ | / .               
+            |   /               ..........\|/ . .              
+            |  /                :   b     : . dy              
+            | /                          .                
+            |/                                            
+            +--------------------------------------------->       
+                                                        x
 
+
+          z ^                                             
+            |                 y/  .                       
+            |                 /  .          ......... 
+            |                /             /|      :  
+            |               /             / |      :  
+            |              /             /| |      :   
+            |             /             / | /      : 
+            |            /             /  |/       :   
+            |           /             /  /         :  
+            |          /             /  /          : c  
+            |         /             / ./           :  
+            |        /             /  /            :
+            |       /             /  /             :
+            |      /             /  /              :
+            |     /             |  /               :
+            |    /              | / .              :
+            |   /               |/....................              
+            |  /                 :        b        :              
+            | /                          .                
+            |/                                            
+            +--------------------------------------------->       
+                                                         x
+    Create a cube traversal object in the XZ plane.
 
     Args:
-        dx (float, optional): _description_. Defaults to 10.0.
-        dy (float, optional): _description_. Defaults to 10.0.
-        dz (float, optional): _description_. Defaults to 10.0.
-        ax (float, optional): _description_. Defaults to 10.0.
-        bx (float, optional): _description_. Defaults to 10.0.
-        ay (float, optional): _description_. Defaults to 10.0.
-        by (float, optional): _description_. Defaults to 10.0.
-        a_pos (pos, optional): _description_. Defaults to pos().
-        a_rot (rot, optional): _description_. Defaults to rot().
-        name (str, optional): _description_. Defaults to None.
-        info (str, optional): _description_. Defaults to "".
-        purch (purch, optional): _description_. Defaults to None.
+        dy (float, optional): The height of the cube. Defaults to 10.0.
+        dz (float, optional): The depth of the cube. Defaults to 10.0.
+        a (float, optional): The length of one side of the cube (a or c should be > 0). Defaults to 10.0.
+        b (float, optional): The width of the cube. Defaults to 10.0.
+        c (float, optional): An alternative length of one side of the cube (a or c should be > 0). Defaults to 0.
+        cut (int, optional): The type of cut, either CUT_VERTICAL or CUT_HORIZONTAL. Defaults to CUT_VERTICAL.
+        a_pos (pos, optional): The position of the cube. Defaults to pos().
+        a_rot (rot, optional): The rotation of the cube. Defaults to rot().
+        name (str, optional): A name for the cube traversal object. Defaults to None.
+        info (str, optional): Additional information about the cube traversal object. Defaults to "".
+        purch (purch, optional): Purchase information. Defaults to None.
+
+    Returns:
+        None
     """
 
-    cube_traverse = sobj(name=name, pos=a_pos, rot=a_rot,info=info, purch=purch)
-
-    if (ax != 0) and (ay != 0):
-        tan_angle = ax/ay
-        angle = math.atan2(tan_angle)
-        print (angle)
+    cube_traverse = None
+    assert (b > 0), "b > 0" 
+    assert (a >= 0), "a >= 0" 
+    assert (c >= 0), "c >= 0" 
     
-        cube_base = cube(dx,dy,dz)
-        cube_traverse.add(cube_base)
-    
-        cube_base.rot = rot(0,angle,0)
-
-
-        pass
-
+    if (cut == CUT_VERTICAL):    
+        if (a > 0):
+            angle_x = math.degrees(math.atan2(a,b))
+            dx = math.sqrt(a**2 + b**2)
+            off_x = -math.sin(math.radians(angle_x))*dz
+            off_z = a-math.cos(math.radians(angle_x))*dz
+            cube_traverse = mac_cube_angle(dx,dy,dz,-angle_x,-(90-angle_x), a_rot=rot(0,angle_x,0), a_pos=pos(off_x,0,off_z))    
+        elif (c > 0):
+            angle_x = math.degrees(math.atan2(c,b))
+            dx = math.sqrt(c**2 + b**2)
+            off_x = math.sin(math.radians(angle_x))*dz
+            off_z = -math.cos(math.radians(angle_x))*dz
+            cube_traverse = mac_cube_angle(dx,dy,dz,-(90-angle_x),-angle_x, a_rot=rot(0,-1*angle_x,0), a_pos=pos(off_x,0,off_z))    
+            
+            
     return cube_traverse
 
+def mac_cube_traverse_yz(dx:float=10.0,
+                         dz:float=10.0,
+                         a:float=10.0,
+                         b:float=10.0,
+                         c:float=0,
+                         cut = CUT_VERTICAL,
+                         a_pos:pos = pos(),
+                         a_rot:rot = rot(),
+                         name:str = None,
+                         info: str = "",
+                         purch:purch = None) -> None:
+    """
+
+          z ^                                             
+            |                 y/                         
+            |                 /                          
+            |                /      /\ .                          /|      :             
+            |               /   .. /  \ .                        / |      :             
+            |              /    : |\   \ .                      /| |      :             
+            |             /     : | \   \ .                    / | /      :           
+            |            /      : |  \   \ .                  /  |/       :             
+            |           /       : \   \   \ .                /  /         :             
+            |          /        :  \   \   \ .              /  /          : c           
+            |         /         :   \   \   \ . .          / ./           :             
+            |        /        a :    \   \   \ ....       /  /            :             
+            |       /           :     \   \  /|          /  /             :             
+            |      /            :      \   \/ |  dz     /  /              :             
+            |     /             :       \  |  |....    |  /               :             
+            |    /              :        \ | / .       | / .              :             
+            |   /               ..........\|/ . .      |/....................           
+            |  /                :   b     : . dy        :        b        :            
+            | /                          .                
+            |/                                            
+            +------------------------------------------------------------------->       
+                                                                              x
+      
+
+                                                                                 ^z
+                                                                                 |
+                                                                                 |
+                          /\                                      /|      :      |                /x
+                      .. /  \ .                                  / |      :      |               /
+                      : |\   \ .                                /| |      :      |              /
+                      : | \   \ .                              / | /      :      |             /
+                      : |  \   \ .                            /  |/       :      |            /
+                      : \   \   \ .                          /  /         :      |           /
+                      :  \   \   \ .                        /  /          : c    |          /
+                      :   \   \   \ . .                    / ./           :      |         /
+                    a :    \   \   \ ....                 /  /            :      |        /
+                      :     \   \  /|                    /  /             :      |       /
+                      :      \   \/ |  dz               /  /              :      |      /
+                      :       \  |  |....              |  /               :      |     /
+                      :        \ | / .                 | / .              :      |    /
+                      ..........\|/ . .                |/....................    |   /      
+                      :   b     : . dy                  :        b        :      |  /     
+                                       .                                         | /
+                                                                                 |/
+            <--------------------------------------------------------------------+       
+             y
+
+     Create a cube traversal object in the YZ plane.
+
+    Args:
+        dx (float, optional): The width of the cube. Defaults to 10.0.
+        dz (float, optional): The depth of the cube. Defaults to 10.0.
+        a (float, optional): The height of one side of the cube (a or c should be > 0). Defaults to 10.0.
+        b (float, optional): The length of the cube. Defaults to 10.0.
+        c (float, optional): An alternative height of one side of the cube (a or c should be > 0). Defaults to 0.
+        cut (int, optional): The type of cut, either CUT_VERTICAL or CUT_HORIZONTAL. Defaults to CUT_VERTICAL.
+        a_pos (pos, optional): The position of the cube. Defaults to pos().
+        a_rot (rot, optional): The rotation of the cube. Defaults to rot().
+        name (str, optional): A name for the cube traversal object. Defaults to None.
+        info (str, optional): Additional information about the cube traversal object. Defaults to "".
+        purch (purch, optional): Purchase information. Defaults to None.
+
+    Returns:
+        None
+    """
+
+    cube_traverse = None
+    assert (b > 0), "b > 0" 
+    assert (a >= 0), "a >= 0" 
+    assert (c >= 0), "c >= 0" 
+    
+    if (cut == CUT_VERTICAL):    
+        if (c > 0):
+            angle_y = math.degrees(math.atan2(c,b))
+            dy = math.sqrt(c**2 + b**2)
+            off_y = -math.sin(math.radians(angle_y))*dz
+            off_z = c-math.cos(math.radians(angle_y))*dz
+            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-angle_y,-(90-angle_y), a_rot=rot(-1*angle_y,0,0), a_pos=pos(0,off_y,off_z))    
+        elif (a > 0):
+            angle_y = math.degrees(math.atan2(a,b))
+            dy = math.sqrt(a**2 + b**2)
+            off_y = math.sin(math.radians(angle_y))*dz
+            off_z = -math.cos(math.radians(angle_y))*dz
+            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-(90-angle_y),-angle_y, a_rot=rot(angle_y,0,0), a_pos=pos(0,off_y,off_z))    
+            
+            
+    return cube_traverse
 
 
 
