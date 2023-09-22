@@ -5,6 +5,8 @@ import pcad.pcad as pcad
 import prog.prog_parse as prog_parse
 import copy
 
+from obj.constructives.mac_cube_traverse import *
+
 VERSION_POST_120_Bar_42_4_verzinkt = 1
 VERSION_POST_100_Bar_42_4_verzinkt = 2
 VERSION_POST_100_Bar_42_4_edelstahl = 3
@@ -24,6 +26,8 @@ DIM_PULL_UP_BAR_Z = 2500
 DIM_DIP_Z = 1500
 
 DIM_ALL_CARRIER_Z = 2000
+
+DIM_TRAVERSE_Z = 500
 
 # purchases
 ##############################################################################
@@ -112,6 +116,8 @@ tpl_bardip.set_color(pcad.RGBColor.DARK_GREY)
 tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post)
 tpl_PostLeftFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
+tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
+
 
 tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post)
 #tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_DIP_Z + DIM_POST*2))
@@ -122,9 +128,9 @@ tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos
 tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post)
 tpl_PostRightFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
+tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
 
 tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post)
-#tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_DIP_Z + DIM_POST*2))
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_CARRIER_Z + DIM_POST*2))
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
 
@@ -136,6 +142,7 @@ post_left_front.name = "post_left_front"
 l_objs.append(post_left_front)
 
 post_left_middle = copy.copy(tpl_PostLeftMiddleEnd)
+post_left_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
 post_left_middle.name = "post_left_middle"
 post_left_middle.pos = pcad.pos(0, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_left_middle)
@@ -153,6 +160,14 @@ carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_AL
 #carrier_left.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
+
+traverse_straigth_left = pcad.sobj("traverse_straigth_left", pos=pos(0,0, DIM_TRAVERSE_Z), purch=purch_post)
+traverse_straigth_left.add(pcad.cube(DIM_POST, post_left_middle.pos.y + DIM_POST, DIM_POST))
+traverse_straigth_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,0)))
+traverse_straigth_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,post_left_middle.pos.y,0)))
+traverse_straigth_left.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_straigth_left)
+
 
 dim_front_middle=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),plane="-zy",prop=dim_prop)
 l_objs.append(dim_front_middle)
@@ -176,12 +191,13 @@ l_objs.append(dim_dip_heigh)
 
 # right side
 ##############################################################################
-tpl_PostRightFront = copy.copy(tpl_PostRightFront)
-tpl_PostRightFront.name = "post_right_front"
-tpl_PostRightFront.pos = pcad.pos(DIM_ALL_X-DIM_POST,0,0)
-l_objs.append(tpl_PostRightFront)
+post_PostRightFront = copy.copy(tpl_PostRightFront)
+post_PostRightFront.name = "post_right_front"
+post_PostRightFront.pos = pcad.pos(DIM_ALL_X-DIM_POST,0,0)
+l_objs.append(post_PostRightFront)
 
 post_right_middle = copy.copy(tpl_PostRightMiddleEnd)
+post_right_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
 post_right_middle.name = "post_right_middle"
 post_right_middle.pos = pcad.pos(DIM_ALL_X-DIM_POST, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_right_middle)
@@ -199,6 +215,13 @@ carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POS
 #carrier_right.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
 carrier_right.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_right)
+
+traverse_straigth_right = pcad.sobj("traverse_straigth_right", pos=pos(DIM_ALL_X-DIM_POST,0, DIM_TRAVERSE_Z), purch=purch_post)
+traverse_straigth_right.add(pcad.cube(DIM_POST, post_left_middle.pos.y + DIM_POST, DIM_POST))
+traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,0)))
+traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,post_left_middle.pos.y,0)))
+traverse_straigth_right.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_straigth_right)
 
 dim_front_width=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_ALL_X-DIM_POST/2,DIM_POST/2,0),plane="-zx",prop=dim_prop)
 l_objs.append(dim_front_width)

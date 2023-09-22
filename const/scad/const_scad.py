@@ -18,6 +18,8 @@ from obj.primitives.obj_sphere import sphere_const
 
 
 import subprocess
+import psutil
+
 
 class scad_const(const):
     def __init__(self, name, *l_obj) -> None:
@@ -39,11 +41,22 @@ class scad_const(const):
         f_file.write(self.s_out)
         f_file.close()
         print(f"{self.s_filename} created")
-        s_call = f"{s_ecall} {self.s_filename}"
-        print (s_call)
-        p = subprocess.Popen([s_ecall, self.s_filename], stdout = subprocess.PIPE)
-        print ("scad started")
-        #p.wait()
+        if (self.is_process_running(s_ecall) == False):
+            s_call = f"{s_ecall} {self.s_filename}"
+            print (s_call)
+            p = subprocess.Popen([s_ecall, self.s_filename], stdout = subprocess.PIPE)
+            print ("scad started")
+            #p.wait()
+
+    def is_process_running(self, process_name):
+        for process in psutil.process_iter(attrs=['name']):
+            try:
+                if process.info['name'] == process_name:
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False
+
 
 
 
