@@ -26,16 +26,17 @@ class scad_const(const):
         super().__init__(name, *l_obj)
         self.s_filename += ".scad"
 
+
+    def set_strategy(self):
         aobj_const().set_strategy(aobj_const_scad())
         sobj_const().set_strategy(sobj_const_scad())
         dim_const().set_strategy(dim_const_scad())
         cube_const().set_strategy(cube_const_scad())
-        cylinder_c = cylinder_const()
-        cylinder_c.set_strategy(cylinder_const_scad())
-        test = cylinder_const()
+        cylinder_const().set_strategy(cylinder_const_scad())
         sphere_const().set_strategy(sphere_const_scad())
 
     def show(self, s_ecall="openscad"):
+        self.set_strategy()
         self.iterate_obj(self.l_obj)
         f_file = open(self.s_filename, "w")
         f_file.write(self.s_out)

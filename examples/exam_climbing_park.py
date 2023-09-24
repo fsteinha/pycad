@@ -3,8 +3,6 @@ sys.path.append("../")
 
 import pcad.pcad as pcad
 import prog.prog_parse as prog_parse
-import copy
-
 from obj.constructives.mac_cube_traverse import *
 
 VERSION_POST_120_Bar_42_4_verzinkt = 1
@@ -137,17 +135,17 @@ tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.po
 
 # left side
 ##############################################################################
-post_left_front = copy.copy(tpl_PostLeftFront)
+post_left_front = tpl_PostLeftFront.copy()
 post_left_front.name = "post_left_front"
 l_objs.append(post_left_front)
 
-post_left_middle = copy.copy(tpl_PostLeftMiddleEnd)
+post_left_middle = tpl_PostLeftMiddleEnd.copy()
 post_left_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
 post_left_middle.name = "post_left_middle"
 post_left_middle.pos = pcad.pos(0, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_left_middle)
 
-post_left_end = copy.copy(tpl_PostLeftMiddleEnd)
+post_left_end = tpl_PostLeftMiddleEnd.copy()
 post_left_end.name = "post_left_end"
 post_left_end.pos = pcad.pos(0, DIM_ALL_Y, 0)
 l_objs.append(post_left_end)
@@ -191,18 +189,18 @@ l_objs.append(dim_dip_heigh)
 
 # right side
 ##############################################################################
-post_PostRightFront = copy.copy(tpl_PostRightFront)
+post_PostRightFront = tpl_PostRightFront.copy()
 post_PostRightFront.name = "post_right_front"
 post_PostRightFront.pos = pcad.pos(DIM_ALL_X-DIM_POST,0,0)
 l_objs.append(post_PostRightFront)
 
-post_right_middle = copy.copy(tpl_PostRightMiddleEnd)
+post_right_middle = tpl_PostRightMiddleEnd.copy()
 post_right_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
 post_right_middle.name = "post_right_middle"
 post_right_middle.pos = pcad.pos(DIM_ALL_X-DIM_POST, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_right_middle)
 
-post_right_end = copy.copy(tpl_PostRightMiddleEnd)
+post_right_end = tpl_PostRightMiddleEnd.copy()
 post_right_end.name = "post_right_end"
 post_right_end.pos = pcad.pos(DIM_ALL_X-DIM_POST, DIM_ALL_Y, 0)
 l_objs.append(post_right_end)
@@ -234,17 +232,17 @@ l_objs.append(dim_front_width)
 # carrier_middle.set_color(pcad.RGBColor.RED)
 # l_objs.append(carrier_middle)
 
-pull_up_bar = copy.copy(tpl_barpullup)
+pull_up_bar = tpl_barpullup.copy()
 pull_up_bar.name = "pull_up_bar"
 pull_up_bar.pos = pcad.pos(0, DIM_POST/2, DIM_PULL_UP_BAR_Z)
 l_objs.append(pull_up_bar)
 
-dip_bar_front = copy.copy(tpl_bardip)
+dip_bar_front = tpl_bardip.copy()
 dip_bar_front.name = "dip_bar_front"
 dip_bar_front.pos = pcad.pos(0, DIM_ALL_MID_Y, DIM_DIP_Z)
 l_objs.append(dip_bar_front)
 
-dip_bar_end = copy.copy(tpl_bardip)
+dip_bar_end = tpl_bardip.copy()
 dip_bar_end.name = "dip_bar_end"
 dip_bar_end.pos = pcad.pos(0, DIM_ALL_Y + DIM_POST/2, DIM_DIP_Z)
 l_objs.append(dip_bar_end)

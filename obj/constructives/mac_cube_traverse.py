@@ -7,6 +7,7 @@ import math as math
 
 CUT_VERTICAL   = 0
 CUT_HORIZONTAL = 1
+CUT_VERTICAL_HORIZONTAL = 2
 
 
 def mac_cube_traverse_xz(dy:float=10.0,
@@ -22,51 +23,51 @@ def mac_cube_traverse_xz(dy:float=10.0,
                          purch:purch = None) -> None:
     """
 
-          z ^                                             
-            |                 y/  .                       
-            |                 /  .                        
-            |                /      /\ .                       
-            |               /   .. /  \ .                      
-            |              /    : |\   \ .                     
-            |             /     : | \   \ .                  
-            |            /      : |  \   \ .                   
-            |           /       : \   \   \ .                  
-            |          /        :  \   \   \ .                 
-            |         /         :   \   \   \ . .              
-            |        /        a :    \   \   \ ....            
-            |       /           :     \   \  /|                
-            |      /            :      \   \/ |  dz            
-            |     /             :       \  |  |....            
-            |    /              :        \ | / .               
-            |   /               ..........\|/ . .              
-            |  /                :   b     : . dy              
-            | /                          .                
-            |/                                            
-            +--------------------------------------------->       
+          z ^
+            |                 y/  .
+            |                 /  .
+            |                /      /\ .
+            |               /   .. /  \ .
+            |              /    : |\   \ .
+            |             /     : | \   \ .
+            |            /      : |  \   \ .
+            |           /       : \   \   \ .
+            |          /        :  \   \   \ .
+            |         /         :   \   \   \ . .
+            |        /        a :    \   \   \ ....
+            |       /           :     \   \  /|
+            |      /            :      \   \/ |  dz
+            |     /             :       \  |  |....
+            |    /              :        \ | / .
+            |   /               ..........\|/ . .
+            |  /                :   b     : . dy
+            | /                          .
+            |/
+            +--------------------------------------------->
                                                         x
 
 
-          z ^                                             
-            |                 y/  .                       
-            |                 /  .          ......... 
-            |                /             /|      :  
-            |               /             / |      :  
-            |              /             /| |      :   
-            |             /             / | /      : 
-            |            /             /  |/       :   
-            |           /             /  /         :  
-            |          /             /  /          : c  
-            |         /             / ./           :  
+          z ^
+            |                 y/  .
+            |                 /  .          .........
+            |                /             /|      :
+            |               /             / |      :
+            |              /             /| |      :
+            |             /             / | /      :
+            |            /             /  |/       :
+            |           /             /  /         :
+            |          /             /  /          : c
+            |         /             / ./           :
             |        /             /  /            :
             |       /             /  /             :
             |      /             /  /              :
             |     /             |  /               :
             |    /              | / .              :
-            |   /               |/....................              
-            |  /                 :        b        :              
-            | /                          .                
-            |/                                            
-            +--------------------------------------------->       
+            |   /               |/....................
+            |  /                 :        b        :
+            | /                          .
+            |/
+            +--------------------------------------------->
                                                          x
     Create a cube traversal object in the XZ plane.
 
@@ -88,25 +89,25 @@ def mac_cube_traverse_xz(dy:float=10.0,
     """
 
     cube_traverse = None
-    assert (b > 0), "b > 0" 
-    assert (a >= 0), "a >= 0" 
-    assert (c >= 0), "c >= 0" 
-    
-    if (cut == CUT_VERTICAL):    
+    assert (b > 0), "b > 0"
+    assert (a >= 0), "a >= 0"
+    assert (c >= 0), "c >= 0"
+
+    if (cut == CUT_VERTICAL):
         if (a > 0):
             angle_x = math.degrees(math.atan2(a,b))
             dx = math.sqrt(a**2 + b**2)
             off_x = -math.sin(math.radians(angle_x))*dz
             off_z = a-math.cos(math.radians(angle_x))*dz
-            cube_traverse = mac_cube_angle(dx,dy,dz,-angle_x,-(90-angle_x), a_rot=rot(0,angle_x,0), a_pos=pos(off_x,0,off_z))    
+            cube_traverse = mac_cube_angle(dx,dy,dz,-angle_x,-(90-angle_x), a_rot=rot(0,angle_x,0), a_pos=pos(off_x,0,off_z))
         elif (c > 0):
             angle_x = math.degrees(math.atan2(c,b))
             dx = math.sqrt(c**2 + b**2)
             off_x = math.sin(math.radians(angle_x))*dz
             off_z = -math.cos(math.radians(angle_x))*dz
-            cube_traverse = mac_cube_angle(dx,dy,dz,-(90-angle_x),-angle_x, a_rot=rot(0,-1*angle_x,0), a_pos=pos(off_x,0,off_z))    
-            
-            
+            cube_traverse = mac_cube_angle(dx,dy,dz,-(90-angle_x),-angle_x, a_rot=rot(0,-1*angle_x,0), a_pos=pos(off_x,0,off_z))
+
+
     return cube_traverse
 
 def mac_cube_traverse_yz(dx:float=10.0,
@@ -122,29 +123,29 @@ def mac_cube_traverse_yz(dx:float=10.0,
                          purch:purch = None) -> None:
     """
 
-          z ^                                             
-            |                 y/                         
-            |                 /                          
-            |                /      /\ .                          /|      :             
-            |               /   .. /  \ .                        / |      :             
-            |              /    : |\   \ .                      /| |      :             
-            |             /     : | \   \ .                    / | /      :           
-            |            /      : |  \   \ .                  /  |/       :             
-            |           /       : \   \   \ .                /  /         :             
-            |          /        :  \   \   \ .              /  /          : c           
-            |         /         :   \   \   \ . .          / ./           :             
-            |        /        a :    \   \   \ ....       /  /            :             
-            |       /           :     \   \  /|          /  /             :             
-            |      /            :      \   \/ |  dz     /  /              :             
-            |     /             :       \  |  |....    |  /               :             
-            |    /              :        \ | / .       | / .              :             
-            |   /               ..........\|/ . .      |/....................           
-            |  /                :   b     : . dy        :        b        :            
-            | /                          .                
-            |/                                            
-            +------------------------------------------------------------------->       
+          z ^
+            |                 y/
+            |                 /
+            |                /      /\ .                          /|      :
+            |               /   .. /  \ .                        / |      :
+            |              /    : |\   \ .                      /| |      :
+            |             /     : | \   \ .                    / | /      :
+            |            /      : |  \   \ .                  /  |/       :
+            |           /       : \   \   \ .                /  /         :
+            |          /        :  \   \   \ .              /  /          : c
+            |         /         :   \   \   \ . .          / ./           :
+            |        /        a :    \   \   \ ....       /  /            :
+            |       /           :     \   \  /|          /  /             :
+            |      /            :      \   \/ |  dz     /  /              :
+            |     /             :       \  |  |....    |  /               :
+            |    /              :        \ | / .       | / .              :
+            |   /               ..........\|/ . .      |/....................
+            |  /                :   b     : . dy        :        b        :
+            | /                          .
+            |/
+            +------------------------------------------------------------------->
                                                                               x
-      
+
 
                                                                                  ^z
                                                                                  |
@@ -162,11 +163,11 @@ def mac_cube_traverse_yz(dx:float=10.0,
                       :      \   \/ |  dz               /  /              :      |      /
                       :       \  |  |....              |  /               :      |     /
                       :        \ | / .                 | / .              :      |    /
-                      ..........\|/ . .                |/....................    |   /      
-                      :   b     : . dy                  :        b        :      |  /     
+                      ..........\|/ . .                |/....................    |   /
+                      :   b     : . dy                  :        b        :      |  /
                                        .                                         | /
                                                                                  |/
-            <--------------------------------------------------------------------+       
+            <--------------------------------------------------------------------+
              y
 
      Create a cube traversal object in the YZ plane.
@@ -189,25 +190,25 @@ def mac_cube_traverse_yz(dx:float=10.0,
     """
 
     cube_traverse = None
-    assert (b > 0), "b > 0" 
-    assert (a >= 0), "a >= 0" 
-    assert (c >= 0), "c >= 0" 
-    
-    if (cut == CUT_VERTICAL):    
+    assert (b > 0), "b > 0"
+    assert (a >= 0), "a >= 0"
+    assert (c >= 0), "c >= 0"
+
+    if (cut == CUT_VERTICAL):
         if (c > 0):
             angle_y = math.degrees(math.atan2(c,b))
             dy = math.sqrt(c**2 + b**2)
             off_y = -math.sin(math.radians(angle_y))*dz
             off_z = c-math.cos(math.radians(angle_y))*dz
-            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-angle_y,-(90-angle_y), a_rot=rot(-1*angle_y,0,0), a_pos=pos(0,off_y,off_z))    
+            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-angle_y,-(90-angle_y), a_rot=rot(-1*angle_y,0,0), a_pos=pos(0,off_y,off_z))
         elif (a > 0):
             angle_y = math.degrees(math.atan2(a,b))
             dy = math.sqrt(a**2 + b**2)
             off_y = math.sin(math.radians(angle_y))*dz
             off_z = -math.cos(math.radians(angle_y))*dz
-            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-(90-angle_y),-angle_y, a_rot=rot(angle_y,0,0), a_pos=pos(0,off_y,off_z))    
-            
-            
+            cube_traverse = mac_cube_angle(dx,dy,dz,0,0,-(90-angle_y),-angle_y, a_rot=rot(angle_y,0,0), a_pos=pos(0,off_y,off_z))
+
+
     return cube_traverse
 
 

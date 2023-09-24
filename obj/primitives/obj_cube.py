@@ -1,4 +1,6 @@
 import sys
+import copy
+
 sys.path.append("../..")
 from pcad import pcad_obj, pcad_pos
 from const import const_obj
@@ -13,4 +15,9 @@ class cube(pcad_obj.obj):
         self.dy = dy
         self.dz = dz
         self.const = cube_const()
+
+    def copy(self):
+        ret = copy.deepcopy(self)
+        ret.const = cube_const()
+        return ret
 

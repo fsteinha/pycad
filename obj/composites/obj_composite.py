@@ -1,4 +1,6 @@
 import sys
+import copy
+
 sys.path.append("../..")
 
 from pcad.pcad_obj import obj
@@ -49,3 +51,10 @@ class sobj(cobj):
         super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
         self.const = sobj_const()
         pass
+
+    def copy(self):
+        ret = copy.deepcopy(self)
+        ret.const = sobj_const()
+        for i_obj_idx in range(0, len(self.l_obj)):
+            ret.l_obj[i_obj_idx] = self.l_obj[i_obj_idx].copy()
+        return ret

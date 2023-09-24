@@ -1,4 +1,6 @@
 import sys
+import copy
+
 sys.path.append("../..")
 from pcad import pcad_obj, pcad_pos
 from const import const_obj
@@ -13,4 +15,10 @@ class cylinder(pcad_obj.obj):
         self.drt = drt
         self.dh  = dh
         self.const = cylinder_const()
+
+    def copy(self):
+        ret = copy.deepcopy(self)
+        ret.const = cylinder_const()
+        return ret
+
 

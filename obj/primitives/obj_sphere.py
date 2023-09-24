@@ -1,4 +1,6 @@
 import sys
+import copy
+
 sys.path.append("../..")
 from pcad import pcad_obj, pcad_pos
 from const import const_obj
@@ -11,5 +13,10 @@ class sphere(pcad_obj.obj):
         super().__init__(name, pos, rot)
         self.dr = dr
         self.const = sphere_const()
+
+    def copy(self):
+        ret = copy.deepcopy(self)
+        ret.const = sphere_const()
+        return ret
 
 
