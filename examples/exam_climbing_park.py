@@ -159,12 +159,9 @@ carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_AL
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-traverse_straigth_left = pcad.sobj("traverse_straigth_left", pos=pos(0,0, DIM_TRAVERSE_Z), purch=purch_post)
-traverse_straigth_left.add(pcad.cube(DIM_POST, post_left_middle.pos.y + DIM_POST, DIM_POST))
-traverse_straigth_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,0)))
-traverse_straigth_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,post_left_middle.pos.y,0)))
-traverse_straigth_left.set_color(pcad.RGBColor.RED)
-l_objs.append(traverse_straigth_left)
+traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, post_left_middle.pos.y + DIM_POST, DIM_TRAVERSE_Z, a_pos=pos(DIM_POST,0,0), purch=purch_post)
+traverse_angle_left.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_angle_left)
 
 
 dim_front_middle=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_POST/2,post_left_middle.pos.y+DIM_POST/2,0),plane="-zy",prop=dim_prop)

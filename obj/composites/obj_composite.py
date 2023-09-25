@@ -46,6 +46,13 @@ class aobj(cobj):
         self.const = aobj_const()
         pass
 
+    def copy(self):
+        ret = copy.deepcopy(self)
+        ret.const = aobj_const()
+        for i_obj_idx in range(0, len(self.l_obj)):
+            ret.l_obj[i_obj_idx] = self.l_obj[i_obj_idx].copy()
+        return ret
+
 class sobj(cobj):
     def __init__(self, name:str = None, pos: pos = pos(), rot:rot=rot(), info:str="", purch:purch=None, *args) -> None:
         super().__init__(name=name, pos=pos, rot=rot, info=info, purch=purch, *args)
