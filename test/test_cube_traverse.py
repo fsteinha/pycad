@@ -15,11 +15,14 @@ parser.add_argument("--dz", default=10, type=int, help="z dimension base cube")
 parser.add_argument("--a", default=100, type=int, help="left z-dimension")
 parser.add_argument("--b", default=100, type=int, help="x/y dimension")
 parser.add_argument("--c", default=0  , type=int, help="right z-dimension")
+parser.add_argument("--yz_plane", default=False, action="store_true", help="right z-dimension")
 
 args = parser.parse_args()
 print(args)
-#cube_traverse = mac_cube_traverse_xz(args.dy,args.dz,args.a, args.b, args.c)
-cube_traverse = mac_cube_traverse_yz(args.dx,args.dz,args.a, args.b, args.c)
+if args.yz_plane == False:
+    cube_traverse = mac_cube_traverse_xz(args.dy,args.dz,args.a, args.b, args.c)
+else:
+    cube_traverse = mac_cube_traverse_yz(args.dx,args.dz,args.a, args.b, args.c)
 
 prog_parse.exam_execute([cube_traverse])
 

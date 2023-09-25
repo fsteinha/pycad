@@ -25,7 +25,7 @@ DIM_DIP_Z = 1500
 
 DIM_ALL_CARRIER_Z = 2000
 
-DIM_TRAVERSE_Z = 500
+DIM_TRAVERSE_Z = 600
 
 # purchases
 ##############################################################################
@@ -159,7 +159,7 @@ carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_AL
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, post_left_middle.pos.y + DIM_POST, DIM_TRAVERSE_Z, a_pos=pos(DIM_POST,0,0), purch=purch_post)
+traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, post_left_middle.pos.y - DIM_POST, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
 traverse_angle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_left)
 
@@ -211,12 +211,16 @@ carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POS
 carrier_right.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_right)
 
-traverse_straigth_right = pcad.sobj("traverse_straigth_right", pos=pos(DIM_ALL_X-DIM_POST,0, DIM_TRAVERSE_Z), purch=purch_post)
-traverse_straigth_right.add(pcad.cube(DIM_POST, post_left_middle.pos.y + DIM_POST, DIM_POST))
-traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,0)))
-traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,post_left_middle.pos.y,0)))
-traverse_straigth_right.set_color(pcad.RGBColor.RED)
-l_objs.append(traverse_straigth_right)
+#traverse_straigth_right = pcad.sobj("traverse_straigth_right", pos=pos(DIM_ALL_X-DIM_POST,0, DIM_TRAVERSE_Z), purch=purch_post)
+#traverse_straigth_right.add(pcad.cube(DIM_POST, post_left_middle.pos.y + DIM_POST, DIM_POST))
+#traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,0)))
+#traverse_straigth_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,post_left_middle.pos.y,0)))
+#traverse_straigth_right.set_color(pcad.RGBColor.RED)
+#l_objs.append(traverse_straigth_right)
+
+traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, DIM_TRAVERSE_Z, post_right_middle.pos.y - DIM_POST, 0, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
+traverse_angle_right.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_angle_right)
 
 dim_front_width=pcad.Dimensioning(pcad.Point(DIM_POST/2,DIM_POST/2,0),pcad.Point(DIM_ALL_X-DIM_POST/2,DIM_POST/2,0),plane="-zx",prop=dim_prop)
 l_objs.append(dim_front_width)
