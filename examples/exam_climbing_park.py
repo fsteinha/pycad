@@ -25,7 +25,7 @@ DIM_DIP_Z = 1500
 
 DIM_ALL_CARRIER_Z = 2000
 
-DIM_TRAVERSE_Z = 600
+DIM_TRAVERSE_Z = 500
 
 # purchases
 ##############################################################################
@@ -114,7 +114,7 @@ tpl_bardip.set_color(pcad.RGBColor.DARK_GREY)
 tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post)
 tpl_PostLeftFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
-tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
+#tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
 
 
 tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post)
@@ -126,7 +126,7 @@ tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos
 tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post)
 tpl_PostRightFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
-tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
+#tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
 
 tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post)
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_CARRIER_Z + DIM_POST*2))
@@ -140,7 +140,7 @@ post_left_front.name = "post_left_front"
 l_objs.append(post_left_front)
 
 post_left_middle = tpl_PostLeftMiddleEnd.copy()
-post_left_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
+#post_left_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
 post_left_middle.name = "post_left_middle"
 post_left_middle.pos = pcad.pos(0, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_left_middle)
@@ -159,7 +159,7 @@ carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_AL
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, post_left_middle.pos.y - DIM_POST, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
+traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
 traverse_angle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_left)
 
@@ -192,7 +192,7 @@ post_PostRightFront.pos = pcad.pos(DIM_ALL_X-DIM_POST,0,0)
 l_objs.append(post_PostRightFront)
 
 post_right_middle = tpl_PostRightMiddleEnd.copy()
-post_right_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
+#post_right_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
 post_right_middle.name = "post_right_middle"
 post_right_middle.pos = pcad.pos(DIM_ALL_X-DIM_POST, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_right_middle)
@@ -218,7 +218,7 @@ l_objs.append(carrier_right)
 #traverse_straigth_right.set_color(pcad.RGBColor.RED)
 #l_objs.append(traverse_straigth_right)
 
-traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, DIM_TRAVERSE_Z, post_right_middle.pos.y - DIM_POST, 0, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
+traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, 0, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
 traverse_angle_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_right)
 
@@ -227,6 +227,20 @@ l_objs.append(dim_front_width)
 
 # middle
 ##############################################################################
+# carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
+# carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
+# carrier_middle.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(DIM_POST, 0, 0)))
+# carrier_middle.set_color(pcad.RGBColor.RED)
+# l_objs.append(carrier_middle)
+
+traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_left.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_middle_left)
+
+traverse_middle_rigth = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_rigth.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_middle_rigth)
+
 # carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
 # carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
 # carrier_middle.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(DIM_POST, 0, 0)))
