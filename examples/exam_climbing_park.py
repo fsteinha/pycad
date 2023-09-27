@@ -98,39 +98,51 @@ dim_prop_2=pcad.Dimensioning_Prop(aux_line_lenght=200, line_offset=20, text_offs
 # Bars
 ##############
 tpl_barpullup = pcad.sobj("bar_pull_up_verzinkt", purch=purch_pull_up_bar)
+tpl_barpullup_dz = DIM_ALL_X
 tpl_barpullup.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2, drt=DIM_PULL_UP_BAR_DRT/2, dh=DIM_ALL_X, rot=pcad.rot(ay=90)))
 tpl_barpullup.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2-DIM_PULL_UP_BAR_THICK, drt=DIM_PULL_UP_BAR_DRT/2-DIM_PULL_UP_BAR_THICK, dh=DIM_ALL_X, rot=pcad.rot(ay=90)))
+tpl_barpullup.purch.price_dim=tpl_barpullup_dz/1000
 tpl_barpullup.set_color(pcad.RGBColor.DARK_GREY)
 
 tpl_bardip = pcad.sobj("bar_dip_verzinkt", purch=purch_pull_up_bar)
-tpl_bardip.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2, drt=DIM_PULL_UP_BAR_DRT/2, dh=DIM_ALL_X, rot=pcad.rot(ay=90)))
+tpl_bardip_dz = DIM_ALL_X
+tpl_bardip.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2, drt=DIM_PULL_UP_BAR_DRT/2, dh=tpl_bardip_dz, rot=pcad.rot(ay=90)))
 tpl_bardip.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2-DIM_PULL_UP_BAR_THICK, drt=DIM_PULL_UP_BAR_DRT/2-DIM_PULL_UP_BAR_THICK, dh=DIM_ALL_X, rot=pcad.rot(ay=90)))
+tpl_bardip.purch.price_dim=tpl_bardip_dz/1000
 tpl_bardip.set_color(pcad.RGBColor.DARK_GREY)
 
 # Posts
 ###############
 
 # left post front
-tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post)
-tpl_PostLeftFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
+tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post.copy())
+tpl_PostLeftFront_dz = DIM_ALL_Z
+tpl_PostLeftFront.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostLeftFront_dz))
 tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
 #tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
+tpl_PostLeftFront.purch.price_dim=tpl_PostLeftFront_dz/1000
 
 
-tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post)
+tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post.copy())
 #tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_DIP_Z + DIM_POST*2))
-tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_CARRIER_Z + DIM_POST*2))
+tpl_PostLeftMiddleEnd_z = DIM_ALL_CARRIER_Z + DIM_POST*2
+tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostLeftMiddleEnd_z))
 tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
+tpl_PostLeftMiddleEnd.purch.price_dim=tpl_PostLeftMiddleEnd_z/1000
 
 # right post
-tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post)
+tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post.copy())
+tpl_PostRightFront_dz = DIM_ALL_Z
 tpl_PostRightFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
 #tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
+tpl_PostRightFront.purch.price_dim=tpl_PostRightFront_dz/1000
 
-tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post)
-tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_CARRIER_Z + DIM_POST*2))
+tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post.copy())
+tpl_PostRightMiddleEnd_dz = DIM_ALL_CARRIER_Z + DIM_POST*2
+tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostRightMiddleEnd_dz))
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
+tpl_PostRightMiddleEnd.purch.price_dim=tpl_PostRightMiddleEnd_dz/1000
 
 
 # left side
