@@ -25,7 +25,9 @@ DIM_DIP_Z = 1500
 
 DIM_ALL_CARRIER_Z = 2000
 
-DIM_TRAVERSE_Z = 500
+DIM_TRAVERSE_Z = 300
+DIM_TRAVERSE_X = DIM_TRAVERSE_Z
+DIM_TRAVERSE_Y = DIM_TRAVERSE_X
 
 # purchases
 ##############################################################################
@@ -171,7 +173,7 @@ carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_AL
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
+traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
 traverse_angle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_left)
 
@@ -230,7 +232,7 @@ l_objs.append(carrier_right)
 #traverse_straigth_right.set_color(pcad.RGBColor.RED)
 #l_objs.append(traverse_straigth_right)
 
-traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, 0, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
+traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, 0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
 traverse_angle_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_right)
 
@@ -245,13 +247,22 @@ l_objs.append(dim_front_width)
 # carrier_middle.set_color(pcad.RGBColor.RED)
 # l_objs.append(carrier_middle)
 
-traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_front_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST, 0, 0), purch=purch_post)
+traverse_front_left.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_front_left)
+
+traverse_front_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z, 0, 0), purch=purch_post)
+traverse_front_right.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_front_right)
+
+traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
 traverse_middle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_middle_left)
 
-traverse_middle_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
 traverse_middle_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_middle_right)
+
 
 # carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
 # carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
@@ -280,4 +291,4 @@ l_objs.append(dim_traverse_heigh_1)
 # Execute
 ##############################################################################
 prog_parse.exam_execute(l_objs)
-pcad.purch_report(l_objs,None)
+pcad.purch_report(l_objs, f"{sys.argv[0]}.txt")
