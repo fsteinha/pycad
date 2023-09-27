@@ -249,9 +249,9 @@ traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_Z, D
 traverse_middle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_middle_left)
 
-traverse_middle_rigth = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
-traverse_middle_rigth.set_color(pcad.RGBColor.RED)
-l_objs.append(traverse_middle_rigth)
+traverse_middle_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_Z, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_right.set_color(pcad.RGBColor.RED)
+l_objs.append(traverse_middle_right)
 
 # carrier_middle = pcad.sobj("carrier_middle", pos=pcad.pos(-DIM_POST, DIM_ALL_Y/2-DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
 # carrier_middle.add(pcad.cube(DIM_ALL_X + 2*DIM_POST, DIM_POST, DIM_POST))
@@ -274,8 +274,8 @@ dip_bar_end.name = "dip_bar_end"
 dip_bar_end.pos = pcad.pos(0, DIM_ALL_Y + DIM_POST/2, DIM_DIP_Z)
 l_objs.append(dip_bar_end)
 
-dim_travers_heigh_1=pcad.Dimensioning(pcad.Point(0,post_left_end.pos.y,0),pcad.Point(0,post_left_end.pos.y,DIM_ALL_CARRIER_Z),plane="-yz",prop=dim_prop)
-l_objs.append(dim_travers_heigh_1)
+dim_traverse_heigh_1=pcad.Dimensioning(pcad.Point(0,post_left_end.pos.y,0),pcad.Point(0,post_left_end.pos.y,DIM_ALL_CARRIER_Z),plane="-yz",prop=dim_prop)
+l_objs.append(dim_traverse_heigh_1)
 
 # Execute
 ##############################################################################
