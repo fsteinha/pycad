@@ -19,9 +19,9 @@ parser.add_argument("--ay1", default=-45, type=int, help="right angle for miter 
 
 args = parser.parse_args()
 
-cube_angle = mac_cube_angle_ab(args.dx,args.dy,args.dz,args.ax0,args.ax1, args.ay0, args.ay1)
+cube_angle = mac_cube_angle(args.dx,args.dy,args.dz,args.ax0,args.ax1, args.ay0, args.ay1)
 
-cube_angle2 = mac_cube_angle_ab(args.dx,args.dy,args.dz,-args.ax0,-args.ax1, -args.ay0, -args.ay1, pos(0,0, args.dz*2))
+cube_angle2 = mac_cube_angle(args.dx,args.dy,args.dz,-args.ax0,-args.ax1, -args.ay0, -args.ay1, pos(0,0, args.dz*2))
 
 print (f"{cube_angle} {cube_angle2}")
 prog_parse.exam_execute([cube_angle, cube_angle2])
