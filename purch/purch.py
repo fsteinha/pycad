@@ -95,13 +95,14 @@ class purch_report:
     STR_PRICE_LIST = "price list"
     STR_PRICE_SUMMARY = "Summary"
 
-    def __init__(self, l_obj:list, filename:str) -> None:
+    def __init__(self, l_obj:list, filename:str = "purch") -> None:
         self.l_obj= l_obj
         self.d_purch = {self.STR_PRICE_LIST:{}, self.STR_PRICE_SUMMARY:0.0}
 
         for i_obj in l_obj:
             self.obj_get_price(i_obj)
         self.make_report_text()
+        self.make_report_csv(filename+".csv")
         pass
 
     def make_report_text(self):
@@ -116,6 +117,23 @@ class purch_report:
         print(tabulate(l_tab, headers=["Name", "dim", "price class" "Price[€]", "Price/Unit[€]", "Source"]))
         f_sum = self.d_purch[self.STR_PRICE_SUMMARY]
         print (f"Summary: {f_sum}")
+        pass
+
+    def make_report_csv(self, filename="purch.csv"):
+        l_tab = []
+        file = open(filename,"w")
+
+        file.write("Name;dim;price class;Price[€];Price/Unit[€];Source\n")
+
+        for item in self.d_purch[self.STR_PRICE_LIST].keys():
+            file.write(";".join([item,
+                          str(self.d_purch[self.STR_PRICE_LIST][item][self.STR_DIM]),
+                          str(self.d_purch[self.STR_PRICE_LIST][item][self.STR_PRICE_CLASS]),
+                          str(self.d_purch[self.STR_PRICE_LIST][item][self.STR_PRICE]),
+                          str(self.d_purch[self.STR_PRICE_LIST][item][self.STR_PRICE_UNIT]),
+                          str(self.d_purch[self.STR_PRICE_LIST][item][self.STR_SOURCE])]))
+            file.write("\n")
+        file.close()
         pass
 
     def obj_get_price(self, i_obj):
