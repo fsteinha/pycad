@@ -5,25 +5,20 @@ import pcad.pcad as pcad
 import prog.prog_parse as prog_parse
 from obj.constructives.mac_cube_traverse import *
 
-VERSION_POST_120_Bar_42_4_verzinkt = 1
-VERSION_POST_100_Bar_42_4_verzinkt = 2
-VERSION_POST_100_Bar_42_4_edelstahl = 3
-
-
-VERSION = VERSION_POST_100_Bar_42_4_verzinkt
-
-DIM_ALL_Z = 2600
+DIM_ALL_Z = 3000
 DIM_ALL_X = 1800
-DIM_ALL_MID_Y = 1400
-DIM_ALL_DIP_Y = 440
+DIM_ALL_MID_Y = 1600
+DIM_ALL_DIP_Y = 450
 DIM_ALL_Y = DIM_ALL_MID_Y + DIM_ALL_DIP_Y
+
+DIM_MID_Z = 2400
 
 DIM_PULL_UP_BAR_X = DIM_ALL_X
 DIM_PULL_UP_BAR_Z = 2500
 
 DIM_DIP_Z = 1500
 
-DIM_ALL_CARRIER_Z = 2000
+DIM_ALL_CARRIER_Z = 2200
 
 DIM_TRAVERSE_Z = 300
 DIM_TRAVERSE_X = DIM_TRAVERSE_Z
@@ -31,23 +26,28 @@ DIM_TRAVERSE_Y = DIM_TRAVERSE_X
 
 # purchases
 ##############################################################################
-purch_post_120 = pcad.purch(link="https://www.bauhaus.info/konstruktionsvollholz/konstruktionsvollholz-nsi/p/20113465?variantfallback=diff0-diff1",
-                    price = 13.4,
-                    price_type=pcad.price_type.PRICE_TYPE_DIM,
-                    price_dim=DIM_ALL_Z/1000)
-
 purch_post_100 = pcad.purch(link="https://www.bauhaus.info/konstruktionsvollholz/konstruktionsvollholz-nsi/p/20121574",
                     price = 9.4,
                     price_type=pcad.price_type.PRICE_TYPE_DIM,
                     price_dim=DIM_ALL_Z/1000)
 
+purch_post_100_2_4 = pcad.purch(link="https://www.possling.de/preisliste/Bau-_und_Tischlerholz_rau%7Cgehobelt/Konstruktionsholz/Brettschichtholz_%7C_Leimbinder_BSH/Brettschichtholz%2C_Fichte/katalog/530359/galerie/1/artikel.php",
+                     info="Holzpossling, Leimbinder Fichte 2.4 m,Bestell-Nr.: 530359",
+                     price = 26.28,
+                     price_type=pcad.price_type.PRICE_TYPE_PCS)
+
+purch_post_100_3 = pcad.purch(link="",
+                   info="Holzpossling, Leimbinder Fichte 3 m",
+                   price = 32.85,
+                   price_type=pcad.price_type.PRICE_TYPE_PCS)
+
+purch_carrier = pcad.purch(link="",
+                   info="Holzpossling, Leimbinder Fichte 70x95 m",
+                   price = 17,
+                   price_type=pcad.price_type.PRICE_TYPE_PCS)
+
 purch_pull_up_bar_verzinkt = pcad.purch(link="https://www.prokilo.de",
                     price = 38.20,
-                    price_type=pcad.price_type.PRICE_TYPE_PCS,
-                    price_dim=None)
-
-purch_pull_up_bar_edelstahl = pcad.purch(link="https://www.prokilo.de",
-                    price = 46.30,
                     price_type=pcad.price_type.PRICE_TYPE_PCS,
                     price_dim=None)
 
@@ -58,33 +58,18 @@ purch_post_ancor = pcad.purch(link="https://www.amazon.de/H-Pfostenanker-H-Anker
 
 # Settings
 ##############################################################################
-if VERSION == VERSION_POST_120_Bar_42_4_verzinkt:
-    print (f"VERSION={VERSION}, 120 mm post, bar 42,4 verzinkt")
-    purch_post = purch_post_120
-    purch_pull_up_bar = purch_pull_up_bar_verzinkt
-    DIM_POST=120
-    DIM_PULL_UP_BAR_DRB =42.4
-    DIM_PULL_UP_BAR_DRT =42.4
-    DIM_PULL_UP_BAR_THICK = 2.5
-elif VERSION == VERSION_POST_100_Bar_42_4_verzinkt:
-    print (f"VERSION={VERSION}, 100 mm post, bar 42,4  verzinkt")
-    purch_post = purch_post_100
-    purch_pull_up_bar = purch_pull_up_bar_verzinkt
-    DIM_POST=100
-    DIM_PULL_UP_BAR_DRB =42.4
-    DIM_PULL_UP_BAR_DRT =42.4
-    DIM_PULL_UP_BAR_THICK = 2.5
-elif VERSION == VERSION_POST_100_Bar_42_4_edelstahl:
-    print (f"VERSION={VERSION}, 100 mm post, bar 42,4  Edelstahl")
-    purch_post = purch_post_100
-    purch_pull_up_bar = purch_pull_up_bar_edelstahl
-    DIM_POST=100
-    DIM_PULL_UP_BAR_DRB =42.4
-    DIM_PULL_UP_BAR_DRT =42.4
-    DIM_PULL_UP_BAR_THICK = 2.0
-else:
-    raise Exception ("Unknown version")
+print (f"VERSION: 100 mm post, bar 42,4  verzinkt")
+purch_pull_up_bar = purch_pull_up_bar_verzinkt
+DIM_POST=100
+DIM_PULL_UP_BAR_DRB =42.4
+DIM_PULL_UP_BAR_DRT =42.4
+DIM_PULL_UP_BAR_THICK = 2.5
 
+DIM_CARRIER_X = 70
+DIM_CARRIER_Z = 95
+
+DIM_CARRIER_NOTCH_X = 20
+DIM_CARRIER_NOTCH_Z = DIM_CARRIER_Z
 
 # object list
 l_objs = []
@@ -110,42 +95,32 @@ tpl_bardip = pcad.sobj("bar_dip_verzinkt", purch=purch_pull_up_bar)
 tpl_bardip_dz = DIM_ALL_X
 tpl_bardip.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2, drt=DIM_PULL_UP_BAR_DRT/2, dh=tpl_bardip_dz, rot=pcad.rot(ay=90)))
 tpl_bardip.add(pcad.cylinder(drb=DIM_PULL_UP_BAR_DRB/2-DIM_PULL_UP_BAR_THICK, drt=DIM_PULL_UP_BAR_DRT/2-DIM_PULL_UP_BAR_THICK, dh=DIM_ALL_X, rot=pcad.rot(ay=90)))
-tpl_bardip.purch.price_dim=tpl_bardip_dz/1000
 tpl_bardip.set_color(pcad.RGBColor.DARK_GREY)
 
 # Posts
 ###############
 
 # left post front
-tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post.copy())
+tpl_PostLeftFront = pcad.sobj("post_left_front", info = "", purch=purch_post_100_3)
 tpl_PostLeftFront_dz = DIM_ALL_Z
 tpl_PostLeftFront.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostLeftFront_dz))
 tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
-#tpl_PostLeftFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
-tpl_PostLeftFront.purch.price_dim=tpl_PostLeftFront_dz/1000
 
-
-tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post.copy())
-#tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, DIM_DIP_Z + DIM_POST*2))
-tpl_PostLeftMiddleEnd_z = DIM_ALL_CARRIER_Z + DIM_POST*2
+tpl_PostLeftMiddleEnd = pcad.sobj("post_left_middle_end", info = "", purch=purch_post_100_2_4)
+tpl_PostLeftMiddleEnd_z = DIM_MID_Z
 tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostLeftMiddleEnd_z))
 tpl_PostLeftMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(60,0,DIM_ALL_CARRIER_Z)))
-tpl_PostLeftMiddleEnd.purch.price_dim=tpl_PostLeftMiddleEnd_z/1000
 
 # right post
-tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post.copy())
+tpl_PostRightFront = pcad.sobj("post_right_front", purch=purch_post_100_3)
 tpl_PostRightFront_dz = DIM_ALL_Z
 tpl_PostRightFront.add(pcad.cube(DIM_POST, DIM_POST, DIM_ALL_Z))
 tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
-#tpl_PostRightFront.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_TRAVERSE_Z)))
-tpl_PostRightFront.purch.price_dim=tpl_PostRightFront_dz/1000
 
-tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post.copy())
-tpl_PostRightMiddleEnd_dz = DIM_ALL_CARRIER_Z + DIM_POST*2
+tpl_PostRightMiddleEnd = pcad.sobj("post_right_middle_end", purch=purch_post_100_2_4)
+tpl_PostRightMiddleEnd_dz = DIM_MID_Z
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST, DIM_POST, tpl_PostRightMiddleEnd_dz))
 tpl_PostRightMiddleEnd.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,0,DIM_ALL_CARRIER_Z)))
-tpl_PostRightMiddleEnd.purch.price_dim=tpl_PostRightMiddleEnd_dz/1000
-
 
 # left side
 ##############################################################################
@@ -154,7 +129,6 @@ post_left_front.name = "post_left_front"
 l_objs.append(post_left_front)
 
 post_left_middle = tpl_PostLeftMiddleEnd.copy()
-#post_left_middle.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,0,DIM_TRAVERSE_Z)))
 post_left_middle.name = "post_left_middle"
 post_left_middle.pos = pcad.pos(0, DIM_ALL_Y - DIM_POST/2 - DIM_ALL_DIP_Y, 0)
 l_objs.append(post_left_middle)
@@ -164,16 +138,16 @@ post_left_end.name = "post_left_end"
 post_left_end.pos = pcad.pos(0, DIM_ALL_Y, 0)
 l_objs.append(post_left_end)
 
-carrier_left = pcad.sobj("carrier_left", pos=pcad.pos(0, -DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
-carrier_left.add(pcad.cube(DIM_POST, DIM_ALL_Y + 3*DIM_POST, DIM_POST))
-carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_POST,0)))
-carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
-carrier_left.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(0,DIM_ALL_Y+ DIM_POST, 0)))
-#carrier_left.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
+carrier_left = pcad.sobj("carrier_left", pos=pcad.pos(DIM_POST-DIM_CARRIER_X, -DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_carrier)
+carrier_left_lenght = DIM_ALL_Y + 3*DIM_POST
+carrier_left.add(pcad.cube(DIM_CARRIER_X, carrier_left_lenght, DIM_CARRIER_Z))
+carrier_left.add(pcad.cube(DIM_CARRIER_NOTCH_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(0,DIM_POST,0)))
+carrier_left.add(pcad.cube(DIM_CARRIER_NOTCH_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(0,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
+carrier_left.add(pcad.cube(DIM_CARRIER_NOTCH_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(0,DIM_ALL_Y+ DIM_POST, 0)))
 carrier_left.set_color(pcad.RGBColor.RED)
 l_objs.append(carrier_left)
 
-traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post)
+traverse_angle_left = mac_cube_traverse_yz(DIM_POST,DIM_POST,0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(0,DIM_POST,0), purch=purch_post_100_2_4)
 traverse_angle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_left)
 
@@ -216,13 +190,15 @@ post_right_end.name = "post_right_end"
 post_right_end.pos = pcad.pos(DIM_ALL_X-DIM_POST, DIM_ALL_Y, 0)
 l_objs.append(post_right_end)
 
-carrier_right = pcad.sobj("carrier_right", pos=pcad.pos(DIM_ALL_X-DIM_POST, -DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_post)
-carrier_right.add(pcad.cube(DIM_POST, DIM_ALL_Y + 3*DIM_POST, DIM_POST))
-carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_POST,0)))
-carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
-carrier_right.add(pcad.cube(DIM_POST/2, DIM_POST, DIM_POST, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y+ DIM_POST, 0)))
+carrier_right = pcad.sobj("carrier_right", pos=pcad.pos(DIM_ALL_X-DIM_POST, -DIM_POST, DIM_ALL_CARRIER_Z), purch=purch_carrier)
+carrier_right_lenght = DIM_ALL_Y + 3*DIM_POST
+carrier_right.add(pcad.cube(DIM_CARRIER_X, carrier_right_lenght, DIM_CARRIER_Z))
+carrier_right.add(pcad.cube(DIM_CARRIER_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(DIM_POST/2,DIM_POST,0)))
+carrier_right.add(pcad.cube(DIM_CARRIER_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y + DIM_POST/2 - DIM_ALL_DIP_Y, 0)))
+carrier_right.add(pcad.cube(DIM_CARRIER_X, DIM_POST, DIM_CARRIER_Z, pos=pcad.pos(DIM_POST/2,DIM_ALL_Y+ DIM_POST, 0)))
 #carrier_right.add(pcad.cube(DIM_POST, DIM_POST, DIM_POST/2, pos=pcad.pos(0,DIM_ALL_Y/2, DIM_POST/2)))
 carrier_right.set_color(pcad.RGBColor.RED)
+carrier_right.purch.price_dim=carrier_right_lenght/1000
 l_objs.append(carrier_right)
 
 #traverse_straigth_right = pcad.sobj("traverse_straigth_right", pos=pos(DIM_ALL_X-DIM_POST,0, DIM_TRAVERSE_Z), purch=purch_post)
@@ -232,7 +208,7 @@ l_objs.append(carrier_right)
 #traverse_straigth_right.set_color(pcad.RGBColor.RED)
 #l_objs.append(traverse_straigth_right)
 
-traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, 0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post)
+traverse_angle_right = mac_cube_traverse_yz(DIM_POST,DIM_POST, 0, DIM_TRAVERSE_Y, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X-DIM_POST,DIM_POST,0), purch=purch_post_100_2_4)
 traverse_angle_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_angle_right)
 
@@ -247,19 +223,19 @@ l_objs.append(dim_front_width)
 # carrier_middle.set_color(pcad.RGBColor.RED)
 # l_objs.append(carrier_middle)
 
-traverse_front_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST, 0, 0), purch=purch_post)
+traverse_front_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST, 0, 0), purch=purch_post_100_2_4)
 traverse_front_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_front_left)
 
-traverse_front_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z, 0, 0), purch=purch_post)
+traverse_front_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z, 0, 0), purch=purch_post_100_2_4)
 traverse_front_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_front_right)
 
-traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_left = mac_cube_traverse_xz(DIM_POST,DIM_POST, DIM_TRAVERSE_X, DIM_TRAVERSE_Z, 0, a_pos=pos(DIM_POST,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post_100_2_4)
 traverse_middle_left.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_middle_left)
 
-traverse_middle_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post)
+traverse_middle_right = mac_cube_traverse_xz(DIM_POST,DIM_POST, 0,DIM_TRAVERSE_X, DIM_TRAVERSE_Z, a_pos=pos(DIM_ALL_X - DIM_POST- DIM_TRAVERSE_Z,DIM_ALL_MID_Y-DIM_POST/2,0), purch=purch_post_100_2_4)
 traverse_middle_right.set_color(pcad.RGBColor.RED)
 l_objs.append(traverse_middle_right)
 
