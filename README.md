@@ -1,23 +1,12 @@
-# pycad
-framework for generating 3D CAD drawings based on known framworkes like scad or caquery
+# General
+## Base principle
 
-## uml: sequence diagram
-Here I will embed PlantUML markup to generate a sequence diagram.
+Pycad is a framework for define and generate 3D model in python. The model definitions results pycad based objects. This objects are converted with a constructor for a 3D viewer (e.g. openscad)
 
-I can include as many plantuml segments as I want in my Markdown, and the diagrams can be of any type supported by PlantUML.
+![base principle](./doc/dia_principle.svg)
 
-```plantuml
-@startuml
-    skinparam backgroundColor #EEEBDC
-    skinparam handwritten true
-    actor Customer
-    Customer -> "login()" : username & password
-    "login()" -> Customer : session token
-    activate "login()"
-    Customer -> "placeOrder()" : session token, order info
-    "placeOrder()" -> Customer : ok
-    Customer -> "logout()"
-    "logout()" -> Customer : ok
-    deactivate "login()"
-@enduml
-```
+## How to use
+
+# Pycad library
+## objects
+### cube
