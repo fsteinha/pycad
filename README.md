@@ -1,3 +1,29 @@
+# Table of content
+- [Table of content](#table-of-content)
+- [General](#general)
+  - [Base principle](#base-principle)
+- [How to use](#how-to-use)
+- [Directory structure](#directory-structure)
+  - [const](#const)
+  - [obj](#obj)
+    - [composites](#composites)
+      - [aobj](#aobj)
+        - [Description](#description)
+        - [Arguments](#arguments)
+      - [sobj](#sobj)
+        - [Description](#description-1)
+        - [Arguments](#arguments-1)
+        - [Common methods](#common-methods)
+        - [Special methods](#special-methods)
+          - [copy](#copy)
+      - [cobj](#cobj)
+        - [Description](#description-2)
+        - [common method add](#common-method-add)
+- [Pycad library](#pycad-library)
+  - [objects](#objects)
+    - [cube](#cube)
+- [ToDo's](#todos)
+
 # General
 ## Base principle
 
@@ -58,11 +84,35 @@ The const directory includes the constructor classes
 The obj directory includes the objects supported by pycad library.
 ### composites
 #### aobj
+##### Description
 The *aobj* is the "additional object". An additional object groups objects in addition.
+##### Arguments 
+    name (str, optional): name ob object. Defaults to None.
+    pos (pos, optional): position of object. Defaults to pos().
+    rot (rot, optional): rotation of . Defaults to rot().
+    info (str, optional): general information. Defaults to "".
+    purch (_type_, optional): purchase information. Defaults to purch.
+    args: objects to add
 #### sobj
+##### Description
 The *sobj* is the "subtractive object". A subtractive object groups objects with a initial (first object). All further objects are subtract from this.
+##### Arguments
+    name (str, optional): name ob object. Defaults to None.
+    pos (pos, optional): position of object. Defaults to pos().
+    rot (rot, optional): rotation of . Defaults to rot().
+    info (str, optional): general information. Defaults to "".
+    purch (_type_, optional): purchase information. Defaults to purch.
+    args: objects to add
+##### Common methods
+see [cobj](cobj)
+##### Special methods
+###### copy
+returns a deep copy from the object
 #### cobj
-The *cobj* is the parent class from *aobj* and *sobj*
+##### Description
+The *cobj* is the parent class from *aobj* and *sobj* and not determined for usage
+##### common method add
+The add method add's a object to the 
 
 # Pycad library
 ## objects
