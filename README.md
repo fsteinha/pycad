@@ -7,6 +7,14 @@
   - [const](#const)
   - [obj](#obj)
     - [composites](#composites)
+    - [primitives](#primitives)
+    - [dimension](#dimension)
+    - [constructives](#constructives)
+  - [pycad](#pycad)
+    - [pcad.py](#pcadpy)
+- [Pycad library](#pycad-library)
+  - [objects](#objects)
+    - [composites](#composites-1)
       - [aobj](#aobj)
         - [Description](#description)
         - [Arguments](#arguments)
@@ -19,9 +27,10 @@
       - [cobj](#cobj)
         - [Description](#description-2)
         - [common method add](#common-method-add)
-- [Pycad library](#pycad-library)
-  - [objects](#objects)
-    - [cube](#cube)
+    - [Primitives](#primitives-1)
+      - [cube](#cube)
+      - [sphere](#sphere)
+      - [cylinder](#cylinder)
 - [ToDo's](#todos)
 
 # General
@@ -79,10 +88,26 @@ results a file *test_cube.scad* and the call of openscad with this file.
 
 # Directory structure
 ## const
-The const directory includes the constructor classes
+The const directory includes the constructor classes.
 ## obj
-The obj directory includes the objects supported by pycad library.
+The *obj* directory includes the objects supported by pycad library.
 ### composites
+The *composites* directory includes sources for [*aobj*](#aobj), [*sobj*](#sobj) and [*cobj*](#cobj)
+### primitives
+The *primitives* directory includes sources for [*cube*](#cube), [*sphere*](#sphere) and [*cylinder*](#cylinder).
+### dimension
+The *dimension* directory includes sources for define dimension items.
+### constructives
+The *constructive* directory includes sources for create special composite objects like traverses.
+## pycad
+The *pycad* directory includes the source for the base definitions of the library.
+### pcad.py
+The pcad.py imports all important basic modules for use the pycad library.
+
+# Pycad library
+## objects
+### composites
+The composites objects groups objects in addition or differences to one object. 
 #### aobj
 ##### Description
 The *aobj* is the "additional object". An additional object groups objects in addition.
@@ -104,7 +129,7 @@ The *sobj* is the "subtractive object". A subtractive object groups objects with
     purch (_type_, optional): purchase information. Defaults to purch.
     args: objects to add
 ##### Common methods
-see [cobj](cobj)
+see [cobj](#cobj)
 ##### Special methods
 ###### copy
 returns a deep copy from the object
@@ -113,10 +138,11 @@ returns a deep copy from the object
 The *cobj* is the parent class from *aobj* and *sobj* and not determined for usage
 ##### common method add
 The add method add's a object to the 
-
-# Pycad library
-## objects
-### cube
+### Primitives
+The primitives objects are basic objects.
+#### cube
+#### sphere
+#### cylinder
 
 # ToDo's
 - Diminsionig swichable
