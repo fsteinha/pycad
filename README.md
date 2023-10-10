@@ -10,22 +10,33 @@
     - [primitives](#primitives)
     - [dimension](#dimension)
     - [constructives](#constructives)
-  - [pycad](#pycad)
+  - [pcad](#pcad)
     - [pcad.py](#pcadpy)
+    - [pcad\_obj.py](#pcad_objpy)
+    - [pcad\_pos.py](#pcad_pospy)
+    - [pcad\_color.py](#pcad_colorpy)
+  - [pcad\_types](#pcad_types)
+  - [prog](#prog)
+  - [purch](#purch)
+  - [test](#test)
 - [Pycad library](#pycad-library)
-  - [objects](#objects)
+  - [3D - objects](#3d---objects)
+  - [Class hierarchies 3D objects](#class-hierarchies-3d-objects)
+    - [obj](#obj-1)
+      - [Description](#description)
+      - [Arguments](#arguments)
     - [composites](#composites-1)
       - [aobj](#aobj)
-        - [Description](#description)
-        - [Arguments](#arguments)
-      - [sobj](#sobj)
         - [Description](#description-1)
         - [Arguments](#arguments-1)
+      - [sobj](#sobj)
+        - [Description](#description-2)
+        - [Arguments](#arguments-2)
         - [Common methods](#common-methods)
         - [Special methods](#special-methods)
           - [copy](#copy)
       - [cobj](#cobj)
-        - [Description](#description-2)
+        - [Description](#description-3)
         - [common method add](#common-method-add)
     - [Primitives](#primitives-1)
       - [cube](#cube)
@@ -99,13 +110,48 @@ The *primitives* directory includes sources for [*cube*](#cube), [*sphere*](#sph
 The *dimension* directory includes sources for define dimension items.
 ### constructives
 The *constructive* directory includes sources for create special composite objects like traverses.
-## pycad
-The *pycad* directory includes the source for the base definitions of the library.
+
+## pcad
+The *pcad* directory includes the source for the base definitions of the library.
 ### pcad.py
 The pcad.py imports all important basic modules for use the pycad library.
+### pcad_obj.py
+The pcad_obj.py provides the parent class for all 3D objects of pycad
+### pcad_pos.py
+The pcad.py provides the position and rotation attribute, which are part of each 3D object.
+### pcad_color.py
+The pcad_color.py provides the color attribute for each 3D object
+
+## pcad_types
+The pcad_types directories provides types for intern use of pycad library
+
+## prog
+The prog directory provides sources with helper classes for realize a cmd line application for generating the defined 3D-Model
+
+## purch
+The purch directory provides sources with the purch classes. This supports generate a purchase list with the need parts for realize the modelled construction.
+
+## test
+The test directory provides source for testing single parts of the pycad library.
 
 # Pycad library
-## objects
+## 3D - objects
+## Class hierarchies 3D objects
+![3D obj class hierarchies](./doc/dia_obj_classes.svg)
+
+The *obj* from the module *pcad_obj* is the parent class of all 3D objects. The *cobj* class is the parent class for all composite classes (*aobj*, *sobj*). This includes primitive classes (*cube*, *cylinder*, *sphere*) at least once of it. 
+### obj
+#### Description
+All base objects inherits from the *obj* class. The *obj* class is NOT part of the user interface.
+#### Arguments
+```
+name (str, optional): Name of object. Defaults to None.
+pos (pos, optional): position of object. Defaults to pos().
+rot (rot, optional): rotation of object. Defaults to rot().
+color (RGBColor, optional): color of object. Defaults to RGBColor().
+info (str, optional): additional information of object. Defaults to "".
+purch (purch, optional): purchase information of object. Defaults to None.
+```
 ### composites
 The composites objects groups objects in addition or differences to one object. 
 #### aobj

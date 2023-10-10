@@ -8,7 +8,16 @@ import gc
 
 class obj:
     def __init__(self, name:str = None, pos:pos=pos(),rot:rot=rot(), color:RGBColor = RGBColor(), info:str="", purch:purch=None) -> None:
-        self.pos = pos
+        """base class for 3D onjects
+
+        Args:
+            name (str, optional): Name of object. Defaults to None.
+            pos (pos, optional): position of object. Defaults to pos().
+            rot (rot, optional): rotation of object. Defaults to rot().
+            color (RGBColor, optional): color of object. Defaults to RGBColor().
+            info (str, optional): additional information of object. Defaults to "".
+            purch (purch, optional): purchase information of object. Defaults to None.
+        """        self.pos = pos
         self.rot = rot
         self.set_name(name)
         self.set_color(color)
