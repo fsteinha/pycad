@@ -4,28 +4,13 @@
   - [Base principle](#base-principle)
 - [How to use](#how-to-use)
 - [Directory structure](#directory-structure)
-  - [const](#const)
-  - [obj](#obj)
-    - [composites](#composites)
-    - [primitives](#primitives)
-    - [dimension](#dimension)
-    - [constructives](#constructives)
-  - [pcad](#pcad)
-    - [pcad.py](#pcadpy)
-    - [pcad\_obj.py](#pcad_objpy)
-    - [pcad\_pos.py](#pcad_pospy)
-    - [pcad\_color.py](#pcad_colorpy)
-  - [pcad\_types](#pcad_types)
-  - [prog](#prog)
-  - [purch](#purch)
-  - [test](#test)
 - [Pycad library](#pycad-library)
   - [3D - objects](#3d---objects)
   - [Class hierarchies 3D objects](#class-hierarchies-3d-objects)
-    - [obj](#obj-1)
+    - [obj](#obj)
       - [Description](#description)
-      - [Arguments](#arguments)
-    - [composites](#composites-1)
+      - [Arguments\<\>](#arguments)
+    - [composites](#composites)
       - [aobj](#aobj)
         - [Description](#description-1)
         - [Arguments](#arguments-1)
@@ -38,7 +23,7 @@
       - [cobj](#cobj)
         - [Description](#description-3)
         - [common method add](#common-method-add)
-    - [Primitives](#primitives-1)
+    - [Primitives](#primitives)
       - [cube](#cube)
       - [sphere](#sphere)
       - [cylinder](#cylinder)
@@ -98,41 +83,26 @@ $ python test_cube.py
 results a file *test_cube.scad* and the call of openscad with this file.
 
 # Directory structure
-## const
-The const directory includes the constructor classes.
-## obj
-The *obj* directory includes the objects supported by pycad library.
-### composites
-The *composites* directory includes sources for [*aobj*](#aobj), [*sobj*](#sobj) and [*cobj*](#cobj)
-### primitives
-The *primitives* directory includes sources for [*cube*](#cube), [*sphere*](#sphere) and [*cylinder*](#cylinder).
-### dimension
-The *dimension* directory includes sources for define dimension items.
-### constructives
-The *constructive* directory includes sources for create special composite objects like traverses.
 
-## pcad
-The *pcad* directory includes the source for the base definitions of the library.
-### pcad.py
-The pcad.py imports all important basic modules for use the pycad library.
-### pcad_obj.py
-The pcad_obj.py provides the parent class for all 3D objects of pycad
-### pcad_pos.py
-The pcad.py provides the position and rotation attribute, which are part of each 3D object.
-### pcad_color.py
-The pcad_color.py provides the color attribute for each 3D object
-
-## pcad_types
-The pcad_types directories provides types for intern use of pycad library
-
-## prog
-The prog directory provides sources with helper classes for realize a cmd line application for generating the defined 3D-Model
-
-## purch
-The purch directory provides sources with the purch classes. This supports generate a purchase list with the need parts for realize the modelled construction.
-
-## test
-The test directory provides source for testing single parts of the pycad library.
+| Item              | dir(d) or file(f) | Description |
+|-------------------|-------------------|-------------|
+| const             | d                 | Base constructor classes and specializations |
+| const/cadquery    | d                 | constructor for cadquery (not functional) |
+| const/scad        | d                 | constructor for openscad |
+| obj               | d                 | Classes for 3D objects supported by pycad library.|
+| obj/composites    | d                 | Sources with definition of [*aobj*](#aobj), [*sobj*](#sobj) and [*cobj*](#cobj) |
+| obj/primitives    | d                 | Sources with definition of [*cube*](#cube), [*sphere*](#sphere) and [*cylinder*](#cylinder). |
+| obj/dimension     | d                 | Sources with definition of dimension drawings| 
+| obj/constructives | d                 | Sources with definition of special composite objects like traverses.|
+| pcad              | d                 | Source for the base definitions of the library.|
+| pcad/pcad.py      | f                 | Imports all important basic modules for use the pycad library. |
+| pcad/pcad_obj.py  | f                 | Provides the parent class for all 3D objects of pycad
+| obj/pcad_pos.py   | f                 | Provides the position and rotation attribute, which are part of each 3D object. |
+| obj/pcad_color.py | f                 | Provides the color attribute for each 3D object|
+| pcad_types        | d                 | Provides types for intern use of pycad library|
+| prog              | d                 | Provides sources with helper classes for realize a cmd line application for generating the defined 3D-Model|
+| purch             | d                 | Provides sources with the purch classes. This supports generate a purchase list with the need parts for realize the modelled construction.|
+| test              | d                 | Provides source for testing single parts of the pycad library.|
 
 # Pycad library
 ## 3D - objects
@@ -143,7 +113,7 @@ The *obj* from the module *pcad_obj* is the parent class of all 3D objects. The 
 ### obj
 #### Description
 All base objects inherits from the *obj* class. The *obj* class is NOT part of the user interface.
-#### Arguments
+#### Arguments<>
 ```
 name (str, optional): Name of object. Defaults to None.
 pos (pos, optional): position of object. Defaults to pos().
