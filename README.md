@@ -7,26 +7,32 @@
 - [Pycad library](#pycad-library)
   - [3D - objects](#3d---objects)
   - [Class hierarchies 3D objects](#class-hierarchies-3d-objects)
-    - [obj](#obj)
+  - [Object classes](#object-classes)
+    - [obj -base class](#obj--base-class)
       - [Description](#description)
       - [Arguments\<\>](#arguments)
-    - [composites](#composites)
-      - [aobj](#aobj)
-        - [Description](#description-1)
+    - [composite - classey](#composite---classey)
+      - [aobj - additional grouping](#aobj---additional-grouping)
+        - [DescriptionThe *aobj* is the "additional object". An additional object groups objects in addition.](#descriptionthe-aobj-is-the-additional-object-an-additional-object-groups-objects-in-addition)
         - [Arguments](#arguments-1)
-      - [sobj](#sobj)
-        - [Description](#description-2)
+        - [methods](#methods)
+      - [sobj - substract grouping](#sobj---substract-grouping)
+        - [Description](#description-1)
         - [Arguments](#arguments-2)
-        - [Common methods](#common-methods)
-        - [Special methods](#special-methods)
-          - [copy](#copy)
+        - [methods](#methods-1)
       - [cobj](#cobj)
-        - [Description](#description-3)
-        - [common method add](#common-method-add)
+        - [Description](#description-2)
+        - [methods](#methods-2)
     - [Primitives](#primitives)
       - [cube](#cube)
+        - [Description](#description-3)
+        - [Arguments](#arguments-3)
       - [sphere](#sphere)
+        - [Description](#description-4)
+        - [Arguments](#arguments-4)
       - [cylinder](#cylinder)
+        - [Description](#description-5)
+        - [Arguments](#arguments-5)
 - [ToDo's](#todos)
 
 # General
@@ -110,7 +116,8 @@ results a file *test_cube.scad* and the call of openscad with this file.
 ![3D obj class hierarchies](./doc/dia_obj_classes.svg)
 
 The *obj* from the module *pcad_obj* is the parent class of all 3D objects. The *cobj* class is the parent class for all composite classes (*aobj*, *sobj*). This includes primitive classes (*cube*, *cylinder*, *sphere*) at least once of it. 
-### obj
+## Object classes 
+### obj -base class
 #### Description
 All base objects inherits from the *obj* class. The *obj* class is NOT part of the user interface.
 #### Arguments<>
@@ -122,11 +129,10 @@ color (RGBColor, optional): color of object. Defaults to RGBColor().
 info (str, optional): additional information of object. Defaults to "".
 purch (purch, optional): purchase information of object. Defaults to None.
 ```
-### composites
+### composite - classey
 The composites objects groups objects in addition or differences to one object. 
-#### aobj
-##### Description
-The *aobj* is the "additional object". An additional object groups objects in addition.
+#### aobj - additional grouping
+##### DescriptionThe *aobj* is the "additional object". An additional object groups objects in addition.
 ##### Arguments 
     name (str, optional): name ob object. Defaults to None.
     pos (pos, optional): position of object. Defaults to pos().
@@ -134,7 +140,12 @@ The *aobj* is the "additional object". An additional object groups objects in ad
     info (str, optional): general information. Defaults to "".
     purch (_type_, optional): purchase information. Defaults to purch.
     args: objects to add
-#### sobj
+##### methods
+| method  | description                    |
+|---------|--------------------------------|
+| common *| see [cobj](#cobj)              |
+| copy    | returns a deep copy from itself|
+#### sobj - substract grouping 
 ##### Description
 The *sobj* is the "subtractive object". A subtractive object groups objects with a initial (first object). All further objects are subtract from this.
 ##### Arguments
@@ -144,21 +155,46 @@ The *sobj* is the "subtractive object". A subtractive object groups objects with
     info (str, optional): general information. Defaults to "".
     purch (_type_, optional): purchase information. Defaults to purch.
     args: objects to add
-##### Common methods
-see [cobj](#cobj)
-##### Special methods
-###### copy
-returns a deep copy from the object
+##### methods
+| method  | description                    |
+|---------|--------------------------------|
+| common *| see [cobj](#cobj)              |
+| copy    | returns a deep copy from itself|
 #### cobj
 ##### Description
 The *cobj* is the parent class from *aobj* and *sobj* and not determined for usage
-##### common method add
-The add method add's a object to the 
+##### methods
+| method           | description                    |
+|------------------|--------------------------------|
+| common method add| The add method add's a object to the list of objects witch has to group              |
+
+
 ### Primitives
-The primitives objects are basic objects.
+The primitives objects are basic 3D - objects.
+
 #### cube
+##### Description
+The cube object defines a cube 3D object in dimension, position and rotation.
+##### Arguments
+
+```
+  dx (float, optional): dimension in x axis. Defaults to 10.0.
+  dy (float, optional): dimension in y axis. Defaults to 10.0.
+  dz (float, optional): dimension in z axis. Defaults to 10.0.
+  name (str, optional): name of object. Defaults to None.
+  pos (pcad_pos.pos, optional): position of object. Defaults to pcad_pos.pos().
+  rot (pcad_pos.rot, optional): rotation of object. Defaults to pcad_pos.rot().
+```
+
 #### sphere
+##### Description
+The sphere object defines a sphere 3D object in dimension, position and rotation.
+##### Arguments
+
 #### cylinder
+##### Description
+The sphere object defines a sphere 3D object in dimension, position and rotation.
+##### Arguments
 
 # ToDo's
 - Diminsionig swichable
