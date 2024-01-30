@@ -10,7 +10,16 @@ class cube_const(const_obj.const_obj_base):
 
 class cube(pcad_obj.obj):
     def __init__(self, dx:float=10.0, dy:float=10.0, dz:float=10.0, name = None, pos:pcad_pos.pos=pcad_pos.pos(), rot:pcad_pos.rot=pcad_pos.rot()) -> None:
-        super().__init__(name, pos, rot)
+        """inits a 3D cube object
+
+        Args:
+            dx (float, optional): dimension in x axis. Defaults to 10.0.
+            dy (float, optional): dimension in y axis. Defaults to 10.0.
+            dz (float, optional): dimension in z axis. Defaults to 10.0.
+            name (_type_, optional): _description_. Defaults to None.
+            pos (pcad_pos.pos, optional): _description_. Defaults to pcad_pos.pos().
+            rot (pcad_pos.rot, optional): _description_. Defaults to pcad_pos.rot().
+        """        super().__init__(name, pos, rot)
         self.dx = dx
         self.dy = dy
         self.dz = dz
